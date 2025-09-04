@@ -1,0 +1,93 @@
+{
+  "dataset": "examples/dataset_v1.jsonl",
+  "refs_dir": "./examples/docs",
+  "counts": {
+    "items": 25,
+    "dup_clusters": 6,
+    "dup_members": 7,
+    "leakage": 1
+  },
+  "dup_clusters": [
+    {
+      "canonical": "Q01",
+      "canonical_input": "How do I create a new Git branch?",
+      "members": [
+        "Q08"
+      ],
+      "member_inputs": [
+        "Create a new branch in Git"
+      ]
+    },
+    {
+      "canonical": "Q02",
+      "canonical_input": "How do I open a pull request on GitHub?",
+      "members": [
+        "Q12",
+        "Q21"
+      ],
+      "member_inputs": [
+        "Create a pull request on GitHub",
+        "Open a PR from a feature branch"
+      ]
+    },
+    {
+      "canonical": "Q03",
+      "canonical_input": "How do I delete a local Git branch?",
+      "members": [
+        "Q17"
+      ],
+      "member_inputs": [
+        "Remove a local branch in Git"
+      ]
+    },
+    {
+      "canonical": "Q05",
+      "canonical_input": "How do I set up SSH keys for GitHub?",
+      "members": [
+        "Q20"
+      ],
+      "member_inputs": [
+        "Add an SSH key to my GitHub account"
+      ]
+    },
+    {
+      "canonical": "Q11",
+      "canonical_input": "How do I enable two-factor authentication (2FA) on GitHub?",
+      "members": [
+        "Q19"
+      ],
+      "member_inputs": [
+        "Turn on 2FA for my GitHub account"
+      ]
+    },
+    {
+      "canonical": "Q22",
+      "canonical_input": "Change repository visibility to private",
+      "members": [
+        "Q14"
+      ],
+      "member_inputs": [
+        "How do I make a repository private?"
+      ]
+    }
+  ],
+  "leakage": [
+    {
+      "item_id": "Q15",
+      "file": "examples/docs/token_expiry.txt",
+      "snippet": "Personal access tokens created with classic scopes expire after 30 days by default.",
+      "score": 1.0,
+      "reason": "The expected answer is identical to the reference sentence."
+    }
+  ],
+  "timings": {
+    "duplicates_sec": 286.54619812965393,
+    "leakage_sec": 50.789888858795166,
+    "total_sec": 337.3360869884491
+  },
+  "stats": {
+    "dup_pairs": 300,
+    "dup_pairs_kept": 7,
+    "leak_calls": 50
+  }
+}

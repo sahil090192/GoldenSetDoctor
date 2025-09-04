@@ -1,0 +1,4 @@
+thresholds:
+  dup_pct: 1.0
+  leakage_count: 0
+block_on_fail: true

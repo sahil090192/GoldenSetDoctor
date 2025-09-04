@@ -1,0 +1,1 @@
+Personal access tokens created with classic scopes expire after 30 days by default.
