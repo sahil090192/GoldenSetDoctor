@@ -1,0 +1,952 @@
+{
+  "dataset": "examples/squad/dataset_squad50.jsonl",
+  "refs_dir": "examples/squad/refs",
+  "counts": {
+    "items": 50,
+    "dup_clusters": 7,
+    "dup_members": 8,
+    "leakage": 0
+  },
+  "dup_clusters": [
+    {
+      "canonical": "56d600e31c85041400946eb1",
+      "canonical_input": "Where was Super Bowl 50 held?",
+      "members": [
+        "56be4db0acb8001400a502ee"
+      ],
+      "member_inputs": [
+        "Where did Super Bowl 50 take place?"
+      ]
+    },
+    {
+      "canonical": "56be8e613aeaaa14008c90d1",
+      "canonical_input": "What was the theme of Super Bowl 50?",
+      "members": [
+        "56bea9923aeaaa14008c91b9"
+      ],
+      "member_inputs": [
+        "What was the theme of Super Bowl 50?"
+      ]
+    },
+    {
+      "canonical": "56beace93aeaaa14008c91df",
+      "canonical_input": "Who won Super Bowl 50?",
+      "members": [
+        "56d20362e7d4791d009025eb",
+        "56d600e31c85041400946eb0"
+      ],
+      "member_inputs": [
+        "Who won Super Bowl 50?",
+        "Which team won Super Bowl 50."
+      ]
+    },
+    {
+      "canonical": "56beace93aeaaa14008c91e0",
+      "canonical_input": "What venue did Super Bowl 50 take place in?",
+      "members": [
+        "56bf10f43aeaaa14008c94ff"
+      ],
+      "member_inputs": [
+        "What stadium did Super Bowl 50 take place in?"
+      ]
+    },
+    {
+      "canonical": "56beace93aeaaa14008c91e1",
+      "canonical_input": "What city did Super Bowl 50 take place in?",
+      "members": [
+        "56bf10f43aeaaa14008c94fe"
+      ],
+      "member_inputs": [
+        "What city did Super Bowl 50 take place in?"
+      ]
+    },
+    {
+      "canonical": "56beace93aeaaa14008c91e3",
+      "canonical_input": "Super Bowl 50 decided the NFL champion for what season?",
+      "members": [
+        "56d600e31c85041400946eae"
+      ],
+      "member_inputs": [
+        "Super Bowl 50 determined the NFL champion for what season?"
+      ]
+    },
+    {
+      "canonical": "56bead5a3aeaaa14008c91ec",
+      "canonical_input": "How many teams have been in the Super Bowl eight times?",
+      "members": [
+        "56bf159b3aeaaa14008c950a"
+      ],
+      "member_inputs": [
+        "How many teams have played in the Super Bowl eight times?"
+      ]
+    }
+  ],
+  "leakage": [],
+  "intent": {
+    "items": [
+      {
+        "id": "56be4db0acb8001400a502ec",
+        "input": "Which NFL team represented the AFC at Super Bowl 50?",
+        "key": "nfl|team|afc-super-bowl-50",
+        "topic": "nfl",
+        "slot": "team",
+        "scope": "afc-super-bowl-50"
+      },
+      {
+        "id": "56be4db0acb8001400a502ed",
+        "input": "Which NFL team represented the NFC at Super Bowl 50?",
+        "key": "nfl|team|nfc-super-bowl-50",
+        "topic": "nfl",
+        "slot": "team",
+        "scope": "nfc-super-bowl-50"
+      },
+      {
+        "id": "56be4db0acb8001400a502ee",
+        "input": "Where did Super Bowl 50 take place?",
+        "key": "super-bowl|where|50",
+        "topic": "super bowl",
+        "slot": "where",
+        "scope": "50"
+      },
+      {
+        "id": "56be4db0acb8001400a502ef",
+        "input": "Which NFL team won Super Bowl 50?",
+        "key": "nfl|winner|super-bowl-50",
+        "topic": "nfl team",
+        "slot": "winner",
+        "scope": "super-bowl-50"
+      },
+      {
+        "id": "56be4db0acb8001400a502f0",
+        "input": "What color was used to emphasize the 50th anniversary of the Super Bowl?",
+        "key": "super-bowl|color|50th-anniversary",
+        "topic": "super bowl",
+        "slot": "color",
+        "scope": "50th-anniversary"
+      },
+      {
+        "id": "56be8e613aeaaa14008c90d1",
+        "input": "What was the theme of Super Bowl 50?",
+        "key": "super-bowl|theme|50",
+        "topic": "super bowl",
+        "slot": "theme",
+        "scope": "50"
+      },
+      {
+        "id": "56be8e613aeaaa14008c90d2",
+        "input": "What day was the game played on?",
+        "key": "game|date|",
+        "topic": "game",
+        "slot": "date",
+        "scope": ""
+      },
+      {
+        "id": "56be8e613aeaaa14008c90d3",
+        "input": "What is the AFC short for?",
+        "key": "football|definition|afc",
+        "topic": "football",
+        "slot": "definition",
+        "scope": "afc"
+      },
+      {
+        "id": "56bea9923aeaaa14008c91b9",
+        "input": "What was the theme of Super Bowl 50?",
+        "key": "super-bowl|theme|50",
+        "topic": "super bowl",
+        "slot": "theme",
+        "scope": "50"
+      },
+      {
+        "id": "56bea9923aeaaa14008c91ba",
+        "input": "What does AFC stand for?",
+        "key": "acronym|definition|",
+        "topic": "afc",
+        "slot": "definition",
+        "scope": ""
+      },
+      {
+        "id": "56bea9923aeaaa14008c91bb",
+        "input": "What day was the Super Bowl played on?",
+        "key": "super-bowl|date|",
+        "topic": "super bowl",
+        "slot": "date",
+        "scope": ""
+      },
+      {
+        "id": "56beace93aeaaa14008c91df",
+        "input": "Who won Super Bowl 50?",
+        "key": "super-bowl|winner|",
+        "topic": "super bowl",
+        "slot": "winner",
+        "scope": ""
+      },
+      {
+        "id": "56beace93aeaaa14008c91e0",
+        "input": "What venue did Super Bowl 50 take place in?",
+        "key": "super-bowl|venue|50",
+        "topic": "super bowl",
+        "slot": "venue",
+        "scope": "50"
+      },
+      {
+        "id": "56beace93aeaaa14008c91e1",
+        "input": "What city did Super Bowl 50 take place in?",
+        "key": "super-bowl|city|50",
+        "topic": "super bowl",
+        "slot": "city",
+        "scope": "50"
+      },
+      {
+        "id": "56beace93aeaaa14008c91e2",
+        "input": "If Roman numerals were used, what would Super Bowl 50 have been called?",
+        "key": "super-bowl|name|",
+        "topic": "super bowl",
+        "slot": "name",
+        "scope": ""
+      },
+      {
+        "id": "56beace93aeaaa14008c91e3",
+        "input": "Super Bowl 50 decided the NFL champion for what season?",
+        "key": "super-bowl|season|nfl",
+        "topic": "super bowl",
+        "slot": "season",
+        "scope": "nfl"
+      },
+      {
+        "id": "56bf10f43aeaaa14008c94fd",
+        "input": "What year did the Denver Broncos secure a Super Bowl title for the third time?",
+        "key": "super-bowl|year|denver-broncos",
+        "topic": "super bowl",
+        "slot": "year",
+        "scope": "denver-broncos"
+      },
+      {
+        "id": "56bf10f43aeaaa14008c94fe",
+        "input": "What city did Super Bowl 50 take place in?",
+        "key": "super-bowl|city|50",
+        "topic": "super bowl",
+        "slot": "city",
+        "scope": "50"
+      },
+      {
+        "id": "56bf10f43aeaaa14008c94ff",
+        "input": "What stadium did Super Bowl 50 take place in?",
+        "key": "super-bowl|venue|50",
+        "topic": "super bowl",
+        "slot": "venue",
+        "scope": "50"
+      },
+      {
+        "id": "56bf10f43aeaaa14008c9500",
+        "input": "What was the final score of Super Bowl 50? ",
+        "key": "super-bowl|score|50",
+        "topic": "super bowl",
+        "slot": "score",
+        "scope": "50"
+      },
+      {
+        "id": "56bf10f43aeaaa14008c9501",
+        "input": "What month, day and year did Super Bowl 50 take place? ",
+        "key": "super-bowl|date|",
+        "topic": "super bowl",
+        "slot": "date",
+        "scope": ""
+      },
+      {
+        "id": "56d20362e7d4791d009025e8",
+        "input": "What year was Super Bowl 50?",
+        "key": "super-bowl|year|",
+        "topic": "super bowl",
+        "slot": "year",
+        "scope": ""
+      },
+      {
+        "id": "56d20362e7d4791d009025e9",
+        "input": "What team was the AFC champion?",
+        "key": "afc-champion|team|",
+        "topic": "afc champion",
+        "slot": "team",
+        "scope": ""
+      },
+      {
+        "id": "56d20362e7d4791d009025ea",
+        "input": "What team was the NFC champion?",
+        "key": "nfc-champion|team|",
+        "topic": "nfc",
+        "slot": "champion",
+        "scope": ""
+      },
+      {
+        "id": "56d20362e7d4791d009025eb",
+        "input": "Who won Super Bowl 50?",
+        "key": "super-bowl|winner|",
+        "topic": "super bowl",
+        "slot": "winner",
+        "scope": ""
+      },
+      {
+        "id": "56d600e31c85041400946eae",
+        "input": "Super Bowl 50 determined the NFL champion for what season?",
+        "key": "super-bowl|season|nfl",
+        "topic": "super bowl",
+        "slot": "season",
+        "scope": "nfl"
+      },
+      {
+        "id": "56d600e31c85041400946eb0",
+        "input": "Which team won Super Bowl 50.",
+        "key": "super-bowl|winner|",
+        "topic": "super bowl",
+        "slot": "winner",
+        "scope": ""
+      },
+      {
+        "id": "56d600e31c85041400946eb1",
+        "input": "Where was Super Bowl 50 held?",
+        "key": "super-bowl|where|50",
+        "topic": "super bowl",
+        "slot": "where",
+        "scope": "50"
+      },
+      {
+        "id": "56d9895ddc89441400fdb50e",
+        "input": "The name of the NFL championship game is?",
+        "key": "nfl-championship|name|",
+        "topic": "nfl championship game",
+        "slot": "name",
+        "scope": ""
+      },
+      {
+        "id": "56d9895ddc89441400fdb510",
+        "input": "What 2015 NFL team one the AFC playoff?",
+        "key": "nfl|winner|2015-afc",
+        "topic": "nfl",
+        "slot": "winner",
+        "scope": "2015-afc"
+      },
+      {
+        "id": "56be4e1facb8001400a502f6",
+        "input": "Which Carolina Panthers player was named Most Valuable Player?",
+        "key": "football|mvp|carolina-panthers",
+        "topic": "football",
+        "slot": "mvp",
+        "scope": "carolina-panthers"
+      },
+      {
+        "id": "56be4e1facb8001400a502f9",
+        "input": "How many appearances have the Denver Broncos made in the Super Bowl?",
+        "key": "super-bowl|count|denver-broncos",
+        "topic": "super bowl",
+        "slot": "count",
+        "scope": "denver-broncos"
+      },
+      {
+        "id": "56be4e1facb8001400a502fa",
+        "input": "What year was the Carolina Panthers franchise founded?",
+        "key": "franchise|founded|carolina-panthers",
+        "topic": "franchise",
+        "slot": "founded",
+        "scope": "carolina-panthers"
+      },
+      {
+        "id": "56beaa4a3aeaaa14008c91c2",
+        "input": "What team did the Panthers defeat?",
+        "key": "team|defeat|",
+        "topic": "panthers",
+        "slot": "defeat",
+        "scope": ""
+      },
+      {
+        "id": "56beaa4a3aeaaa14008c91c3",
+        "input": "Who did the Broncos prevent from going to the Super Bowl?",
+        "key": "super-bowl|winner|nfl",
+        "topic": "broncos",
+        "slot": "winner",
+        "scope": "nfl"
+      },
+      {
+        "id": "56bead5a3aeaaa14008c91e9",
+        "input": "Who did the Panthers beat in the NFC Championship Game?",
+        "key": "nfc-championship-game|winner|nfc",
+        "topic": "panthers",
+        "slot": "winner",
+        "scope": "nfc"
+      },
+      {
+        "id": "56bead5a3aeaaa14008c91ea",
+        "input": "Who lost to the Broncos in the AFC Championship?",
+        "key": "afc-championship|loser|",
+        "topic": "broncos",
+        "slot": "loser",
+        "scope": "afc-championship"
+      },
+      {
+        "id": "56bead5a3aeaaa14008c91eb",
+        "input": "Who were the defending Super Bowl champions?",
+        "key": "super-bowl|defending|champions",
+        "topic": "super bowl",
+        "slot": "defending",
+        "scope": ""
+      },
+      {
+        "id": "56bead5a3aeaaa14008c91ec",
+        "input": "How many teams have been in the Super Bowl eight times?",
+        "key": "super-bowl|count|",
+        "topic": "super bowl",
+        "slot": "count",
+        "scope": ""
+      },
+      {
+        "id": "56bead5a3aeaaa14008c91ed",
+        "input": "Who was this season's NFL MVP?",
+        "key": "nfl|mvp|2023",
+        "topic": "nfl",
+        "slot": "mvp",
+        "scope": "2023"
+      },
+      {
+        "id": "56bf159b3aeaaa14008c9507",
+        "input": "What was the win/loss ratio in 2015 for the Carolina Panthers during their regular season?",
+        "key": "football|win-loss-ratio|2015",
+        "topic": "football",
+        "slot": "win-loss-ratio",
+        "scope": "2015"
+      },
+      {
+        "id": "56bf159b3aeaaa14008c9508",
+        "input": "Which Carolina Panthers team member was picked as the team's MVP in 2015? ",
+        "key": "carolina-panthers|mvp|2015",
+        "topic": "carolina panthers",
+        "slot": "mvp",
+        "scope": "2015"
+      },
+      {
+        "id": "56bf159b3aeaaa14008c9509",
+        "input": "What were the win/loss game stats for the Denver Bronco's regular season in 2015?",
+        "key": "nfl|win-loss|2015",
+        "topic": "nfl",
+        "slot": "win-loss",
+        "scope": "2015"
+      },
+      {
+        "id": "56bf159b3aeaaa14008c950a",
+        "input": "How many teams have played in the Super Bowl eight times?",
+        "key": "super-bowl|count|",
+        "topic": "super bowl",
+        "slot": "count",
+        "scope": ""
+      },
+      {
+        "id": "56bf159b3aeaaa14008c950b",
+        "input": "Which team did not get a chance to defend their Super Bowl XLIX win in Super Bowl 50?",
+        "key": "super-bowl|team|50",
+        "topic": "super bowl",
+        "slot": "team",
+        "scope": "50"
+      },
+      {
+        "id": "56d2045de7d4791d009025f3",
+        "input": "Who is the quarterback for the Panthers?",
+        "key": "football|quarterback|panthers",
+        "topic": "football",
+        "slot": "quarterback",
+        "scope": "panthers"
+      },
+      {
+        "id": "56d2045de7d4791d009025f4",
+        "input": "Who did Carolina beat in the NFC championship game?",
+        "key": "nfc-championship|winner|carolina",
+        "topic": "nfc-championship",
+        "slot": "winner",
+        "scope": "carolina"
+      },
+      {
+        "id": "56d2045de7d4791d009025f5",
+        "input": "How many times have the Panthers been in the Super Bowl?",
+        "key": "super-bowl|count|panthers",
+        "topic": "super bowl",
+        "slot": "count",
+        "scope": "panthers"
+      },
+      {
+        "id": "56d2045de7d4791d009025f6",
+        "input": "Who did Denver beat in the AFC championship?",
+        "key": "afc-championship-winner-denver",
+        "topic": "denver",
+        "slot": "winner",
+        "scope": "afc-championship"
+      },
+      {
+        "id": "56d6017d1c85041400946ebe",
+        "input": "Who was the Most Valuable Player for the 2015 NFL season?",
+        "key": "nfl|mvp|2015",
+        "topic": "nfl",
+        "slot": "mvp",
+        "scope": "2015"
+      }
+    ],
+    "buckets": [
+      {
+        "key": "super-bowl|winner|",
+        "size": 3,
+        "members": [
+          {
+            "id": "56beace93aeaaa14008c91df",
+            "input": "Who won Super Bowl 50?"
+          },
+          {
+            "id": "56d20362e7d4791d009025eb",
+            "input": "Who won Super Bowl 50?"
+          },
+          {
+            "id": "56d600e31c85041400946eb0",
+            "input": "Which team won Super Bowl 50."
+          }
+        ]
+      },
+      {
+        "key": "super-bowl|city|50",
+        "size": 2,
+        "members": [
+          {
+            "id": "56beace93aeaaa14008c91e1",
+            "input": "What city did Super Bowl 50 take place in?"
+          },
+          {
+            "id": "56bf10f43aeaaa14008c94fe",
+            "input": "What city did Super Bowl 50 take place in?"
+          }
+        ]
+      },
+      {
+        "key": "super-bowl|count|",
+        "size": 2,
+        "members": [
+          {
+            "id": "56bead5a3aeaaa14008c91ec",
+            "input": "How many teams have been in the Super Bowl eight times?"
+          },
+          {
+            "id": "56bf159b3aeaaa14008c950a",
+            "input": "How many teams have played in the Super Bowl eight times?"
+          }
+        ]
+      },
+      {
+        "key": "super-bowl|date|",
+        "size": 2,
+        "members": [
+          {
+            "id": "56bea9923aeaaa14008c91bb",
+            "input": "What day was the Super Bowl played on?"
+          },
+          {
+            "id": "56bf10f43aeaaa14008c9501",
+            "input": "What month, day and year did Super Bowl 50 take place? "
+          }
+        ]
+      },
+      {
+        "key": "super-bowl|season|nfl",
+        "size": 2,
+        "members": [
+          {
+            "id": "56beace93aeaaa14008c91e3",
+            "input": "Super Bowl 50 decided the NFL champion for what season?"
+          },
+          {
+            "id": "56d600e31c85041400946eae",
+            "input": "Super Bowl 50 determined the NFL champion for what season?"
+          }
+        ]
+      },
+      {
+        "key": "super-bowl|theme|50",
+        "size": 2,
+        "members": [
+          {
+            "id": "56be8e613aeaaa14008c90d1",
+            "input": "What was the theme of Super Bowl 50?"
+          },
+          {
+            "id": "56bea9923aeaaa14008c91b9",
+            "input": "What was the theme of Super Bowl 50?"
+          }
+        ]
+      },
+      {
+        "key": "super-bowl|venue|50",
+        "size": 2,
+        "members": [
+          {
+            "id": "56beace93aeaaa14008c91e0",
+            "input": "What venue did Super Bowl 50 take place in?"
+          },
+          {
+            "id": "56bf10f43aeaaa14008c94ff",
+            "input": "What stadium did Super Bowl 50 take place in?"
+          }
+        ]
+      },
+      {
+        "key": "super-bowl|where|50",
+        "size": 2,
+        "members": [
+          {
+            "id": "56be4db0acb8001400a502ee",
+            "input": "Where did Super Bowl 50 take place?"
+          },
+          {
+            "id": "56d600e31c85041400946eb1",
+            "input": "Where was Super Bowl 50 held?"
+          }
+        ]
+      },
+      {
+        "key": "acronym|definition|",
+        "size": 1,
+        "members": [
+          {
+            "id": "56bea9923aeaaa14008c91ba",
+            "input": "What does AFC stand for?"
+          }
+        ]
+      },
+      {
+        "key": "afc-championship-winner-denver",
+        "size": 1,
+        "members": [
+          {
+            "id": "56d2045de7d4791d009025f6",
+            "input": "Who did Denver beat in the AFC championship?"
+          }
+        ]
+      },
+      {
+        "key": "afc-championship|loser|",
+        "size": 1,
+        "members": [
+          {
+            "id": "56bead5a3aeaaa14008c91ea",
+            "input": "Who lost to the Broncos in the AFC Championship?"
+          }
+        ]
+      },
+      {
+        "key": "afc-champion|team|",
+        "size": 1,
+        "members": [
+          {
+            "id": "56d20362e7d4791d009025e9",
+            "input": "What team was the AFC champion?"
+          }
+        ]
+      },
+      {
+        "key": "carolina-panthers|mvp|2015",
+        "size": 1,
+        "members": [
+          {
+            "id": "56bf159b3aeaaa14008c9508",
+            "input": "Which Carolina Panthers team member was picked as the team's MVP in 2015? "
+          }
+        ]
+      },
+      {
+        "key": "football|definition|afc",
+        "size": 1,
+        "members": [
+          {
+            "id": "56be8e613aeaaa14008c90d3",
+            "input": "What is the AFC short for?"
+          }
+        ]
+      },
+      {
+        "key": "football|mvp|carolina-panthers",
+        "size": 1,
+        "members": [
+          {
+            "id": "56be4e1facb8001400a502f6",
+            "input": "Which Carolina Panthers player was named Most Valuable Player?"
+          }
+        ]
+      },
+      {
+        "key": "football|quarterback|panthers",
+        "size": 1,
+        "members": [
+          {
+            "id": "56d2045de7d4791d009025f3",
+            "input": "Who is the quarterback for the Panthers?"
+          }
+        ]
+      },
+      {
+        "key": "football|win-loss-ratio|2015",
+        "size": 1,
+        "members": [
+          {
+            "id": "56bf159b3aeaaa14008c9507",
+            "input": "What was the win/loss ratio in 2015 for the Carolina Panthers during their regular season?"
+          }
+        ]
+      },
+      {
+        "key": "franchise|founded|carolina-panthers",
+        "size": 1,
+        "members": [
+          {
+            "id": "56be4e1facb8001400a502fa",
+            "input": "What year was the Carolina Panthers franchise founded?"
+          }
+        ]
+      },
+      {
+        "key": "game|date|",
+        "size": 1,
+        "members": [
+          {
+            "id": "56be8e613aeaaa14008c90d2",
+            "input": "What day was the game played on?"
+          }
+        ]
+      },
+      {
+        "key": "nfc-championship-game|winner|nfc",
+        "size": 1,
+        "members": [
+          {
+            "id": "56bead5a3aeaaa14008c91e9",
+            "input": "Who did the Panthers beat in the NFC Championship Game?"
+          }
+        ]
+      },
+      {
+        "key": "nfc-championship|winner|carolina",
+        "size": 1,
+        "members": [
+          {
+            "id": "56d2045de7d4791d009025f4",
+            "input": "Who did Carolina beat in the NFC championship game?"
+          }
+        ]
+      },
+      {
+        "key": "nfc-champion|team|",
+        "size": 1,
+        "members": [
+          {
+            "id": "56d20362e7d4791d009025ea",
+            "input": "What team was the NFC champion?"
+          }
+        ]
+      },
+      {
+        "key": "nfl-championship|name|",
+        "size": 1,
+        "members": [
+          {
+            "id": "56d9895ddc89441400fdb50e",
+            "input": "The name of the NFL championship game is?"
+          }
+        ]
+      },
+      {
+        "key": "nfl|mvp|2015",
+        "size": 1,
+        "members": [
+          {
+            "id": "56d6017d1c85041400946ebe",
+            "input": "Who was the Most Valuable Player for the 2015 NFL season?"
+          }
+        ]
+      },
+      {
+        "key": "nfl|mvp|2023",
+        "size": 1,
+        "members": [
+          {
+            "id": "56bead5a3aeaaa14008c91ed",
+            "input": "Who was this season's NFL MVP?"
+          }
+        ]
+      },
+      {
+        "key": "nfl|team|afc-super-bowl-50",
+        "size": 1,
+        "members": [
+          {
+            "id": "56be4db0acb8001400a502ec",
+            "input": "Which NFL team represented the AFC at Super Bowl 50?"
+          }
+        ]
+      },
+      {
+        "key": "nfl|team|nfc-super-bowl-50",
+        "size": 1,
+        "members": [
+          {
+            "id": "56be4db0acb8001400a502ed",
+            "input": "Which NFL team represented the NFC at Super Bowl 50?"
+          }
+        ]
+      },
+      {
+        "key": "nfl|win-loss|2015",
+        "size": 1,
+        "members": [
+          {
+            "id": "56bf159b3aeaaa14008c9509",
+            "input": "What were the win/loss game stats for the Denver Bronco's regular season in 2015?"
+          }
+        ]
+      },
+      {
+        "key": "nfl|winner|2015-afc",
+        "size": 1,
+        "members": [
+          {
+            "id": "56d9895ddc89441400fdb510",
+            "input": "What 2015 NFL team one the AFC playoff?"
+          }
+        ]
+      },
+      {
+        "key": "nfl|winner|super-bowl-50",
+        "size": 1,
+        "members": [
+          {
+            "id": "56be4db0acb8001400a502ef",
+            "input": "Which NFL team won Super Bowl 50?"
+          }
+        ]
+      },
+      {
+        "key": "super-bowl|color|50th-anniversary",
+        "size": 1,
+        "members": [
+          {
+            "id": "56be4db0acb8001400a502f0",
+            "input": "What color was used to emphasize the 50th anniversary of the Super Bowl?"
+          }
+        ]
+      },
+      {
+        "key": "super-bowl|count|denver-broncos",
+        "size": 1,
+        "members": [
+          {
+            "id": "56be4e1facb8001400a502f9",
+            "input": "How many appearances have the Denver Broncos made in the Super Bowl?"
+          }
+        ]
+      },
+      {
+        "key": "super-bowl|count|panthers",
+        "size": 1,
+        "members": [
+          {
+            "id": "56d2045de7d4791d009025f5",
+            "input": "How many times have the Panthers been in the Super Bowl?"
+          }
+        ]
+      },
+      {
+        "key": "super-bowl|defending|champions",
+        "size": 1,
+        "members": [
+          {
+            "id": "56bead5a3aeaaa14008c91eb",
+            "input": "Who were the defending Super Bowl champions?"
+          }
+        ]
+      },
+      {
+        "key": "super-bowl|name|",
+        "size": 1,
+        "members": [
+          {
+            "id": "56beace93aeaaa14008c91e2",
+            "input": "If Roman numerals were used, what would Super Bowl 50 have been called?"
+          }
+        ]
+      },
+      {
+        "key": "super-bowl|score|50",
+        "size": 1,
+        "members": [
+          {
+            "id": "56bf10f43aeaaa14008c9500",
+            "input": "What was the final score of Super Bowl 50? "
+          }
+        ]
+      },
+      {
+        "key": "super-bowl|team|50",
+        "size": 1,
+        "members": [
+          {
+            "id": "56bf159b3aeaaa14008c950b",
+            "input": "Which team did not get a chance to defend their Super Bowl XLIX win in Super Bowl 50?"
+          }
+        ]
+      },
+      {
+        "key": "super-bowl|winner|nfl",
+        "size": 1,
+        "members": [
+          {
+            "id": "56beaa4a3aeaaa14008c91c3",
+            "input": "Who did the Broncos prevent from going to the Super Bowl?"
+          }
+        ]
+      },
+      {
+        "key": "super-bowl|year|",
+        "size": 1,
+        "members": [
+          {
+            "id": "56d20362e7d4791d009025e8",
+            "input": "What year was Super Bowl 50?"
+          }
+        ]
+      },
+      {
+        "key": "super-bowl|year|denver-broncos",
+        "size": 1,
+        "members": [
+          {
+            "id": "56bf10f43aeaaa14008c94fd",
+            "input": "What year did the Denver Broncos secure a Super Bowl title for the third time?"
+          }
+        ]
+      },
+      {
+        "key": "team|defeat|",
+        "size": 1,
+        "members": [
+          {
+            "id": "56beaa4a3aeaaa14008c91c2",
+            "input": "What team did the Panthers defeat?"
+          }
+        ]
+      }
+    ]
+  },
+  "timings": {
+    "intent_sec": 50.69956302642822,
+    "duplicates_sec": 13.580086946487427,
+    "leakage_sec": 0.017248868942260742,
+    "total_sec": 64.29689884185791
+  },
+  "stats": {
+    "intent_calls": 50,
+    "buckets": 41,
+    "bucket_calls": 8,
+    "dup_pair_verifications": 10,
+    "dup_pairs_total": 1225,
+    "dup_pairs_within_buckets": 10,
+    "leak_calls": 0
+  }
+}

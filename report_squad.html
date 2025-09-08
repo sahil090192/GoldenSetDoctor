@@ -1,0 +1,134 @@
+<!doctype html><html><head><meta charset='utf-8'><title>Golden-Set Doctor Report</title><style>
+body{font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Helvetica,Arial,sans-serif;margin:24px;}
+h1{margin:0 0 8px 0;}
+.cards{display:flex;gap:12px;flex-wrap:wrap;margin:12px 0 20px;}
+.card{border:1px solid #e5e7eb;border-radius:12px;padding:12px 14px;min-width:160px;box-shadow:0 1px 2px rgba(0,0,0,.03);}
+.card .k{font-size:12px;color:#6b7280;text-transform:uppercase;letter-spacing:.04em;}
+.card .v{font-size:20px;font-weight:600;margin-top:4px;}
+table{border-collapse:collapse;width:100%;margin-top:8px;}
+th,td{border:1px solid #e5e7eb;padding:8px 10px;text-align:left;vertical-align:top;}
+th{background:#f9fafb;font-weight:600;}
+code{background:#f3f4f6;border:1px solid #e5e7eb;padding:2px 4px;border-radius:6px;}
+.small{color:#6b7280;font-size:12px;}
+footer{margin-top:28px;color:#6b7280;font-size:12px;}
+.section{margin-top:18px;}
+</style></head><body><h1>Golden-Set Doctor Report</h1>
+<div class='small'>Dataset: <code>examples/squad/dataset_squad50.jsonl</code></div>
+<div class='cards'>
+<div class='card'><div class='k'>Status</div><div class='v'>Needs attention ⚠️</div></div>
+<div class='card'><div class='k'>Items</div><div class='v'>50</div></div>
+<div class='card'><div class='k'>Dup clusters</div><div class='v'>7</div></div>
+<div class='card'><div class='k'>Dup members</div><div class='v'>8 (16.0%)</div></div>
+<div class='card'><div class='k'>Leakage</div><div class='v'>0</div></div>
+</div>
+<div class='section'><h2>Intent buckets</h2>
+<table><thead><tr><th>Intent key</th><th>Members</th></tr></thead><tbody>
+<tr><td><code>super-bowl|winner|</code> &nbsp;<span class='small'>(n=3)</span></td><td><code>56beace93aeaaa14008c91df</code>: Who won Super Bowl 50?<br><code>56d20362e7d4791d009025eb</code>: Who won Super Bowl 50?<br><code>56d600e31c85041400946eb0</code>: Which team won Super Bowl 50.</td></tr>
+<tr><td><code>super-bowl|city|50</code> &nbsp;<span class='small'>(n=2)</span></td><td><code>56beace93aeaaa14008c91e1</code>: What city did Super Bowl 50 take place in?<br><code>56bf10f43aeaaa14008c94fe</code>: What city did Super Bowl 50 take place in?</td></tr>
+<tr><td><code>super-bowl|count|</code> &nbsp;<span class='small'>(n=2)</span></td><td><code>56bead5a3aeaaa14008c91ec</code>: How many teams have been in the Super Bowl eight times?<br><code>56bf159b3aeaaa14008c950a</code>: How many teams have played in the Super Bowl eight times?</td></tr>
+<tr><td><code>super-bowl|date|</code> &nbsp;<span class='small'>(n=2)</span></td><td><code>56bea9923aeaaa14008c91bb</code>: What day was the Super Bowl played on?<br><code>56bf10f43aeaaa14008c9501</code>: What month, day and year did Super Bowl 50 take place? </td></tr>
+<tr><td><code>super-bowl|season|nfl</code> &nbsp;<span class='small'>(n=2)</span></td><td><code>56beace93aeaaa14008c91e3</code>: Super Bowl 50 decided the NFL champion for what season?<br><code>56d600e31c85041400946eae</code>: Super Bowl 50 determined the NFL champion for what season?</td></tr>
+<tr><td><code>super-bowl|theme|50</code> &nbsp;<span class='small'>(n=2)</span></td><td><code>56be8e613aeaaa14008c90d1</code>: What was the theme of Super Bowl 50?<br><code>56bea9923aeaaa14008c91b9</code>: What was the theme of Super Bowl 50?</td></tr>
+<tr><td><code>super-bowl|venue|50</code> &nbsp;<span class='small'>(n=2)</span></td><td><code>56beace93aeaaa14008c91e0</code>: What venue did Super Bowl 50 take place in?<br><code>56bf10f43aeaaa14008c94ff</code>: What stadium did Super Bowl 50 take place in?</td></tr>
+<tr><td><code>super-bowl|where|50</code> &nbsp;<span class='small'>(n=2)</span></td><td><code>56be4db0acb8001400a502ee</code>: Where did Super Bowl 50 take place?<br><code>56d600e31c85041400946eb1</code>: Where was Super Bowl 50 held?</td></tr>
+<tr><td><code>acronym|definition|</code> &nbsp;<span class='small'>(n=1)</span></td><td><code>56bea9923aeaaa14008c91ba</code>: What does AFC stand for?</td></tr>
+<tr><td><code>afc-championship-winner-denver</code> &nbsp;<span class='small'>(n=1)</span></td><td><code>56d2045de7d4791d009025f6</code>: Who did Denver beat in the AFC championship?</td></tr>
+<tr><td><code>afc-championship|loser|</code> &nbsp;<span class='small'>(n=1)</span></td><td><code>56bead5a3aeaaa14008c91ea</code>: Who lost to the Broncos in the AFC Championship?</td></tr>
+<tr><td><code>afc-champion|team|</code> &nbsp;<span class='small'>(n=1)</span></td><td><code>56d20362e7d4791d009025e9</code>: What team was the AFC champion?</td></tr>
+<tr><td><code>carolina-panthers|mvp|2015</code> &nbsp;<span class='small'>(n=1)</span></td><td><code>56bf159b3aeaaa14008c9508</code>: Which Carolina Panthers team member was picked as the team&#x27;s MVP in 2015? </td></tr>
+<tr><td><code>football|definition|afc</code> &nbsp;<span class='small'>(n=1)</span></td><td><code>56be8e613aeaaa14008c90d3</code>: What is the AFC short for?</td></tr>
+<tr><td><code>football|mvp|carolina-panthers</code> &nbsp;<span class='small'>(n=1)</span></td><td><code>56be4e1facb8001400a502f6</code>: Which Carolina Panthers player was named Most Valuable Player?</td></tr>
+<tr><td><code>football|quarterback|panthers</code> &nbsp;<span class='small'>(n=1)</span></td><td><code>56d2045de7d4791d009025f3</code>: Who is the quarterback for the Panthers?</td></tr>
+<tr><td><code>football|win-loss-ratio|2015</code> &nbsp;<span class='small'>(n=1)</span></td><td><code>56bf159b3aeaaa14008c9507</code>: What was the win/loss ratio in 2015 for the Carolina Panthers during their regular season?</td></tr>
+<tr><td><code>franchise|founded|carolina-panthers</code> &nbsp;<span class='small'>(n=1)</span></td><td><code>56be4e1facb8001400a502fa</code>: What year was the Carolina Panthers franchise founded?</td></tr>
+<tr><td><code>game|date|</code> &nbsp;<span class='small'>(n=1)</span></td><td><code>56be8e613aeaaa14008c90d2</code>: What day was the game played on?</td></tr>
+<tr><td><code>nfc-championship-game|winner|nfc</code> &nbsp;<span class='small'>(n=1)</span></td><td><code>56bead5a3aeaaa14008c91e9</code>: Who did the Panthers beat in the NFC Championship Game?</td></tr>
+<tr><td><code>nfc-championship|winner|carolina</code> &nbsp;<span class='small'>(n=1)</span></td><td><code>56d2045de7d4791d009025f4</code>: Who did Carolina beat in the NFC championship game?</td></tr>
+<tr><td><code>nfc-champion|team|</code> &nbsp;<span class='small'>(n=1)</span></td><td><code>56d20362e7d4791d009025ea</code>: What team was the NFC champion?</td></tr>
+<tr><td><code>nfl-championship|name|</code> &nbsp;<span class='small'>(n=1)</span></td><td><code>56d9895ddc89441400fdb50e</code>: The name of the NFL championship game is?</td></tr>
+<tr><td><code>nfl|mvp|2015</code> &nbsp;<span class='small'>(n=1)</span></td><td><code>56d6017d1c85041400946ebe</code>: Who was the Most Valuable Player for the 2015 NFL season?</td></tr>
+<tr><td><code>nfl|mvp|2023</code> &nbsp;<span class='small'>(n=1)</span></td><td><code>56bead5a3aeaaa14008c91ed</code>: Who was this season&#x27;s NFL MVP?</td></tr>
+<tr><td><code>nfl|team|afc-super-bowl-50</code> &nbsp;<span class='small'>(n=1)</span></td><td><code>56be4db0acb8001400a502ec</code>: Which NFL team represented the AFC at Super Bowl 50?</td></tr>
+<tr><td><code>nfl|team|nfc-super-bowl-50</code> &nbsp;<span class='small'>(n=1)</span></td><td><code>56be4db0acb8001400a502ed</code>: Which NFL team represented the NFC at Super Bowl 50?</td></tr>
+<tr><td><code>nfl|win-loss|2015</code> &nbsp;<span class='small'>(n=1)</span></td><td><code>56bf159b3aeaaa14008c9509</code>: What were the win/loss game stats for the Denver Bronco&#x27;s regular season in 2015?</td></tr>
+<tr><td><code>nfl|winner|2015-afc</code> &nbsp;<span class='small'>(n=1)</span></td><td><code>56d9895ddc89441400fdb510</code>: What 2015 NFL team one the AFC playoff?</td></tr>
+<tr><td><code>nfl|winner|super-bowl-50</code> &nbsp;<span class='small'>(n=1)</span></td><td><code>56be4db0acb8001400a502ef</code>: Which NFL team won Super Bowl 50?</td></tr>
+<tr><td><code>super-bowl|color|50th-anniversary</code> &nbsp;<span class='small'>(n=1)</span></td><td><code>56be4db0acb8001400a502f0</code>: What color was used to emphasize the 50th anniversary of the Super Bowl?</td></tr>
+<tr><td><code>super-bowl|count|denver-broncos</code> &nbsp;<span class='small'>(n=1)</span></td><td><code>56be4e1facb8001400a502f9</code>: How many appearances have the Denver Broncos made in the Super Bowl?</td></tr>
+<tr><td><code>super-bowl|count|panthers</code> &nbsp;<span class='small'>(n=1)</span></td><td><code>56d2045de7d4791d009025f5</code>: How many times have the Panthers been in the Super Bowl?</td></tr>
+<tr><td><code>super-bowl|defending|champions</code> &nbsp;<span class='small'>(n=1)</span></td><td><code>56bead5a3aeaaa14008c91eb</code>: Who were the defending Super Bowl champions?</td></tr>
+<tr><td><code>super-bowl|name|</code> &nbsp;<span class='small'>(n=1)</span></td><td><code>56beace93aeaaa14008c91e2</code>: If Roman numerals were used, what would Super Bowl 50 have been called?</td></tr>
+<tr><td><code>super-bowl|score|50</code> &nbsp;<span class='small'>(n=1)</span></td><td><code>56bf10f43aeaaa14008c9500</code>: What was the final score of Super Bowl 50? </td></tr>
+<tr><td><code>super-bowl|team|50</code> &nbsp;<span class='small'>(n=1)</span></td><td><code>56bf159b3aeaaa14008c950b</code>: Which team did not get a chance to defend their Super Bowl XLIX win in Super Bowl 50?</td></tr>
+<tr><td><code>super-bowl|winner|nfl</code> &nbsp;<span class='small'>(n=1)</span></td><td><code>56beaa4a3aeaaa14008c91c3</code>: Who did the Broncos prevent from going to the Super Bowl?</td></tr>
+<tr><td><code>super-bowl|year|</code> &nbsp;<span class='small'>(n=1)</span></td><td><code>56d20362e7d4791d009025e8</code>: What year was Super Bowl 50?</td></tr>
+<tr><td><code>super-bowl|year|denver-broncos</code> &nbsp;<span class='small'>(n=1)</span></td><td><code>56bf10f43aeaaa14008c94fd</code>: What year did the Denver Broncos secure a Super Bowl title for the third time?</td></tr>
+<tr><td><code>team|defeat|</code> &nbsp;<span class='small'>(n=1)</span></td><td><code>56beaa4a3aeaaa14008c91c2</code>: What team did the Panthers defeat?</td></tr>
+</tbody></table>
+</div>
+<div class='section'><h2>Per-item intent keys</h2>
+<table><thead><tr><th>ID</th><th>Input</th><th>Intent key</th><th>Topic</th><th>Slot</th><th>Scope</th></tr></thead><tbody>
+<tr><td><code>56be4db0acb8001400a502ec</code></td><td>Which NFL team represented the AFC at Super Bowl 50?</td><td><code>nfl|team|afc-super-bowl-50</code></td><td>nfl</td><td>team</td><td>afc-super-bowl-50</td></tr>
+<tr><td><code>56be4db0acb8001400a502ed</code></td><td>Which NFL team represented the NFC at Super Bowl 50?</td><td><code>nfl|team|nfc-super-bowl-50</code></td><td>nfl</td><td>team</td><td>nfc-super-bowl-50</td></tr>
+<tr><td><code>56be4db0acb8001400a502ee</code></td><td>Where did Super Bowl 50 take place?</td><td><code>super-bowl|where|50</code></td><td>super bowl</td><td>where</td><td>50</td></tr>
+<tr><td><code>56be4db0acb8001400a502ef</code></td><td>Which NFL team won Super Bowl 50?</td><td><code>nfl|winner|super-bowl-50</code></td><td>nfl team</td><td>winner</td><td>super-bowl-50</td></tr>
+<tr><td><code>56be4db0acb8001400a502f0</code></td><td>What color was used to emphasize the 50th anniversary of the Super Bowl?</td><td><code>super-bowl|color|50th-anniversary</code></td><td>super bowl</td><td>color</td><td>50th-anniversary</td></tr>
+<tr><td><code>56be8e613aeaaa14008c90d1</code></td><td>What was the theme of Super Bowl 50?</td><td><code>super-bowl|theme|50</code></td><td>super bowl</td><td>theme</td><td>50</td></tr>
+<tr><td><code>56be8e613aeaaa14008c90d2</code></td><td>What day was the game played on?</td><td><code>game|date|</code></td><td>game</td><td>date</td><td></td></tr>
+<tr><td><code>56be8e613aeaaa14008c90d3</code></td><td>What is the AFC short for?</td><td><code>football|definition|afc</code></td><td>football</td><td>definition</td><td>afc</td></tr>
+<tr><td><code>56bea9923aeaaa14008c91b9</code></td><td>What was the theme of Super Bowl 50?</td><td><code>super-bowl|theme|50</code></td><td>super bowl</td><td>theme</td><td>50</td></tr>
+<tr><td><code>56bea9923aeaaa14008c91ba</code></td><td>What does AFC stand for?</td><td><code>acronym|definition|</code></td><td>afc</td><td>definition</td><td></td></tr>
+<tr><td><code>56bea9923aeaaa14008c91bb</code></td><td>What day was the Super Bowl played on?</td><td><code>super-bowl|date|</code></td><td>super bowl</td><td>date</td><td></td></tr>
+<tr><td><code>56beace93aeaaa14008c91df</code></td><td>Who won Super Bowl 50?</td><td><code>super-bowl|winner|</code></td><td>super bowl</td><td>winner</td><td></td></tr>
+<tr><td><code>56beace93aeaaa14008c91e0</code></td><td>What venue did Super Bowl 50 take place in?</td><td><code>super-bowl|venue|50</code></td><td>super bowl</td><td>venue</td><td>50</td></tr>
+<tr><td><code>56beace93aeaaa14008c91e1</code></td><td>What city did Super Bowl 50 take place in?</td><td><code>super-bowl|city|50</code></td><td>super bowl</td><td>city</td><td>50</td></tr>
+<tr><td><code>56beace93aeaaa14008c91e2</code></td><td>If Roman numerals were used, what would Super Bowl 50 have been called?</td><td><code>super-bowl|name|</code></td><td>super bowl</td><td>name</td><td></td></tr>
+<tr><td><code>56beace93aeaaa14008c91e3</code></td><td>Super Bowl 50 decided the NFL champion for what season?</td><td><code>super-bowl|season|nfl</code></td><td>super bowl</td><td>season</td><td>nfl</td></tr>
+<tr><td><code>56bf10f43aeaaa14008c94fd</code></td><td>What year did the Denver Broncos secure a Super Bowl title for the third time?</td><td><code>super-bowl|year|denver-broncos</code></td><td>super bowl</td><td>year</td><td>denver-broncos</td></tr>
+<tr><td><code>56bf10f43aeaaa14008c94fe</code></td><td>What city did Super Bowl 50 take place in?</td><td><code>super-bowl|city|50</code></td><td>super bowl</td><td>city</td><td>50</td></tr>
+<tr><td><code>56bf10f43aeaaa14008c94ff</code></td><td>What stadium did Super Bowl 50 take place in?</td><td><code>super-bowl|venue|50</code></td><td>super bowl</td><td>venue</td><td>50</td></tr>
+<tr><td><code>56bf10f43aeaaa14008c9500</code></td><td>What was the final score of Super Bowl 50? </td><td><code>super-bowl|score|50</code></td><td>super bowl</td><td>score</td><td>50</td></tr>
+<tr><td><code>56bf10f43aeaaa14008c9501</code></td><td>What month, day and year did Super Bowl 50 take place? </td><td><code>super-bowl|date|</code></td><td>super bowl</td><td>date</td><td></td></tr>
+<tr><td><code>56d20362e7d4791d009025e8</code></td><td>What year was Super Bowl 50?</td><td><code>super-bowl|year|</code></td><td>super bowl</td><td>year</td><td></td></tr>
+<tr><td><code>56d20362e7d4791d009025e9</code></td><td>What team was the AFC champion?</td><td><code>afc-champion|team|</code></td><td>afc champion</td><td>team</td><td></td></tr>
+<tr><td><code>56d20362e7d4791d009025ea</code></td><td>What team was the NFC champion?</td><td><code>nfc-champion|team|</code></td><td>nfc</td><td>champion</td><td></td></tr>
+<tr><td><code>56d20362e7d4791d009025eb</code></td><td>Who won Super Bowl 50?</td><td><code>super-bowl|winner|</code></td><td>super bowl</td><td>winner</td><td></td></tr>
+<tr><td><code>56d600e31c85041400946eae</code></td><td>Super Bowl 50 determined the NFL champion for what season?</td><td><code>super-bowl|season|nfl</code></td><td>super bowl</td><td>season</td><td>nfl</td></tr>
+<tr><td><code>56d600e31c85041400946eb0</code></td><td>Which team won Super Bowl 50.</td><td><code>super-bowl|winner|</code></td><td>super bowl</td><td>winner</td><td></td></tr>
+<tr><td><code>56d600e31c85041400946eb1</code></td><td>Where was Super Bowl 50 held?</td><td><code>super-bowl|where|50</code></td><td>super bowl</td><td>where</td><td>50</td></tr>
+<tr><td><code>56d9895ddc89441400fdb50e</code></td><td>The name of the NFL championship game is?</td><td><code>nfl-championship|name|</code></td><td>nfl championship game</td><td>name</td><td></td></tr>
+<tr><td><code>56d9895ddc89441400fdb510</code></td><td>What 2015 NFL team one the AFC playoff?</td><td><code>nfl|winner|2015-afc</code></td><td>nfl</td><td>winner</td><td>2015-afc</td></tr>
+<tr><td><code>56be4e1facb8001400a502f6</code></td><td>Which Carolina Panthers player was named Most Valuable Player?</td><td><code>football|mvp|carolina-panthers</code></td><td>football</td><td>mvp</td><td>carolina-panthers</td></tr>
+<tr><td><code>56be4e1facb8001400a502f9</code></td><td>How many appearances have the Denver Broncos made in the Super Bowl?</td><td><code>super-bowl|count|denver-broncos</code></td><td>super bowl</td><td>count</td><td>denver-broncos</td></tr>
+<tr><td><code>56be4e1facb8001400a502fa</code></td><td>What year was the Carolina Panthers franchise founded?</td><td><code>franchise|founded|carolina-panthers</code></td><td>franchise</td><td>founded</td><td>carolina-panthers</td></tr>
+<tr><td><code>56beaa4a3aeaaa14008c91c2</code></td><td>What team did the Panthers defeat?</td><td><code>team|defeat|</code></td><td>panthers</td><td>defeat</td><td></td></tr>
+<tr><td><code>56beaa4a3aeaaa14008c91c3</code></td><td>Who did the Broncos prevent from going to the Super Bowl?</td><td><code>super-bowl|winner|nfl</code></td><td>broncos</td><td>winner</td><td>nfl</td></tr>
+<tr><td><code>56bead5a3aeaaa14008c91e9</code></td><td>Who did the Panthers beat in the NFC Championship Game?</td><td><code>nfc-championship-game|winner|nfc</code></td><td>panthers</td><td>winner</td><td>nfc</td></tr>
+<tr><td><code>56bead5a3aeaaa14008c91ea</code></td><td>Who lost to the Broncos in the AFC Championship?</td><td><code>afc-championship|loser|</code></td><td>broncos</td><td>loser</td><td>afc-championship</td></tr>
+<tr><td><code>56bead5a3aeaaa14008c91eb</code></td><td>Who were the defending Super Bowl champions?</td><td><code>super-bowl|defending|champions</code></td><td>super bowl</td><td>defending</td><td></td></tr>
+<tr><td><code>56bead5a3aeaaa14008c91ec</code></td><td>How many teams have been in the Super Bowl eight times?</td><td><code>super-bowl|count|</code></td><td>super bowl</td><td>count</td><td></td></tr>
+<tr><td><code>56bead5a3aeaaa14008c91ed</code></td><td>Who was this season&#x27;s NFL MVP?</td><td><code>nfl|mvp|2023</code></td><td>nfl</td><td>mvp</td><td>2023</td></tr>
+<tr><td><code>56bf159b3aeaaa14008c9507</code></td><td>What was the win/loss ratio in 2015 for the Carolina Panthers during their regular season?</td><td><code>football|win-loss-ratio|2015</code></td><td>football</td><td>win-loss-ratio</td><td>2015</td></tr>
+<tr><td><code>56bf159b3aeaaa14008c9508</code></td><td>Which Carolina Panthers team member was picked as the team&#x27;s MVP in 2015? </td><td><code>carolina-panthers|mvp|2015</code></td><td>carolina panthers</td><td>mvp</td><td>2015</td></tr>
+<tr><td><code>56bf159b3aeaaa14008c9509</code></td><td>What were the win/loss game stats for the Denver Bronco&#x27;s regular season in 2015?</td><td><code>nfl|win-loss|2015</code></td><td>nfl</td><td>win-loss</td><td>2015</td></tr>
+<tr><td><code>56bf159b3aeaaa14008c950a</code></td><td>How many teams have played in the Super Bowl eight times?</td><td><code>super-bowl|count|</code></td><td>super bowl</td><td>count</td><td></td></tr>
+<tr><td><code>56bf159b3aeaaa14008c950b</code></td><td>Which team did not get a chance to defend their Super Bowl XLIX win in Super Bowl 50?</td><td><code>super-bowl|team|50</code></td><td>super bowl</td><td>team</td><td>50</td></tr>
+<tr><td><code>56d2045de7d4791d009025f3</code></td><td>Who is the quarterback for the Panthers?</td><td><code>football|quarterback|panthers</code></td><td>football</td><td>quarterback</td><td>panthers</td></tr>
+<tr><td><code>56d2045de7d4791d009025f4</code></td><td>Who did Carolina beat in the NFC championship game?</td><td><code>nfc-championship|winner|carolina</code></td><td>nfc-championship</td><td>winner</td><td>carolina</td></tr>
+<tr><td><code>56d2045de7d4791d009025f5</code></td><td>How many times have the Panthers been in the Super Bowl?</td><td><code>super-bowl|count|panthers</code></td><td>super bowl</td><td>count</td><td>panthers</td></tr>
+<tr><td><code>56d2045de7d4791d009025f6</code></td><td>Who did Denver beat in the AFC championship?</td><td><code>afc-championship-winner-denver</code></td><td>denver</td><td>winner</td><td>afc-championship</td></tr>
+<tr><td><code>56d6017d1c85041400946ebe</code></td><td>Who was the Most Valuable Player for the 2015 NFL season?</td><td><code>nfl|mvp|2015</code></td><td>nfl</td><td>mvp</td><td>2015</td></tr>
+</tbody></table>
+</div>
+<div class='section'><h2>Near-duplicate clusters</h2>
+<table><thead><tr><th>Canonical ID</th><th>Canonical input</th><th>Members</th></tr></thead><tbody>
+<tr><td><code>56d600e31c85041400946eb1</code></td><td>Where was Super Bowl 50 held?</td><td><code>56be4db0acb8001400a502ee</code>: Where did Super Bowl 50 take place?</td></tr>
+<tr><td><code>56be8e613aeaaa14008c90d1</code></td><td>What was the theme of Super Bowl 50?</td><td><code>56bea9923aeaaa14008c91b9</code>: What was the theme of Super Bowl 50?</td></tr>
+<tr><td><code>56beace93aeaaa14008c91df</code></td><td>Who won Super Bowl 50?</td><td><code>56d20362e7d4791d009025eb</code>: Who won Super Bowl 50?<br><code>56d600e31c85041400946eb0</code>: Which team won Super Bowl 50.</td></tr>
+<tr><td><code>56beace93aeaaa14008c91e0</code></td><td>What venue did Super Bowl 50 take place in?</td><td><code>56bf10f43aeaaa14008c94ff</code>: What stadium did Super Bowl 50 take place in?</td></tr>
+<tr><td><code>56beace93aeaaa14008c91e1</code></td><td>What city did Super Bowl 50 take place in?</td><td><code>56bf10f43aeaaa14008c94fe</code>: What city did Super Bowl 50 take place in?</td></tr>
+<tr><td><code>56beace93aeaaa14008c91e3</code></td><td>Super Bowl 50 decided the NFL champion for what season?</td><td><code>56d600e31c85041400946eae</code>: Super Bowl 50 determined the NFL champion for what season?</td></tr>
+<tr><td><code>56bead5a3aeaaa14008c91ec</code></td><td>How many teams have been in the Super Bowl eight times?</td><td><code>56bf159b3aeaaa14008c950a</code>: How many teams have played in the Super Bowl eight times?</td></tr>
+</tbody></table>
+</div>
+<footer>Generated by Golden-Set Doctor · LLM-only v1</footer></body></html>
