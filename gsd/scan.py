@@ -1,16 +1,19 @@
 # gsd/scan.py
 from __future__ import annotations
-import json, time
+import json, time, re
 from collections import defaultdict
 from pathlib import Path
-from typing import Dict, Any, List
+from typing import Dict, Any, List, Tuple
 from tqdm import tqdm
 
 from .utils import load_jsonl, item_input_text, item_expected_text, iter_doc_sentences
-from .judge_llm import (
-    intent_keys, bucket_cluster, judge_duplicate, judge_leakage
-)
-from .rubric_lint import lint_dataset  # NEW
+from .judge_llm import intent_keys, bucket_cluster, judge_duplicate, judge_leakage
+from .rubric_lint import lint_dataset
+
+_TOKEN_RE = re.compile(r"[A-Za-z0-9]+")
+
+def _tokset(s: str) -> set:
+    return set(w.lower() for w in _TOKEN_RE.findall(s or ""))
 
 def _build_dup_clusters(idx_clusters: List[List[int]], ids: List[str], inputs: List[str], expecteds: List[str]):
     dup_clusters = []
@@ -41,7 +44,6 @@ def _clusters_from_buckets(buckets, inputs, *, model, temperature, verify_pairs,
             continue
 
         if verify_pairs:
-            # verify edges with pairwise judge inside each proposed group
             from itertools import combinations
             parent = {i: i for i in idxs}
             rank = {i: 0 for i in idxs}
@@ -120,6 +122,7 @@ def scan_dataset(
     rubric_llm: bool = True,
     rubric_short_min_words: int = 6,
     rubric_long_max_words: int = 100,
+    leak_topk: int = 5,  # NEW: only LLM-judge top-K candidate sentences
 ) -> Dict[str, Any]:
     if not model:
         raise ValueError("model is required (pass --model).")
@@ -144,7 +147,7 @@ def scan_dataset(
         buckets[k].append(i)
     stats["buckets"] = len(buckets)
 
-    # Build intent structures for the run artifact & report
+    # Intent structures
     intent_items = []
     for i, k in enumerate(keys):
         m = meta[i] if i < len(meta) else {}
@@ -209,26 +212,59 @@ def scan_dataset(
 
     dup_clusters, dup_members = _build_dup_clusters(idx_clusters, ids, inputs, expecteds)
 
-    # 3) Leakage (count only actual calls)
+    # 3) Leakage with top-K preselector
     leakage_hits: List[Dict[str, Any]] = []
     leak_calls = 0
+    preselect_scored = 0
     t2 = time.time()
     if refs_dir:
-        sentences = iter_doc_sentences(refs_dir)
+        raw_sentences = iter_doc_sentences(refs_dir)
+        # Pre-tokenize once
+        sentences = []
+        for s in raw_sentences:
+            s["tokens"] = _tokset(s["text"])
+            sentences.append(s)
+
         idx_to_check = [
             i for i in range(len(expecteds))
             if not (respect_open_book and items[i].get("context_url"))
         ]
-        total_calls = len(idx_to_check) * max(1, len(sentences))
-        bar = tqdm(total=total_calls, desc="Leakage checks", unit="call", leave=False, disable=not progress)
+
+        def jaccard(a:set,b:set)->float:
+            if not a or not b: return 0.0
+            inter = len(a & b); union = len(a | b)
+            return inter/union if union else 0.0
+
+        total_pre = len(idx_to_check) * max(1, len(sentences))
+        # progress across preselect + judge
+        bar = tqdm(total=total_pre, desc="Leakage preselect", unit="cmp", leave=False, disable=not progress)
+
+        # Preselect top-K sentence indices for each item
+        topk_for_item: List[List[int]] = []
         for row_idx in idx_to_check:
+            etoks = _tokset(expecteds[row_idx])
+            scores: List[Tuple[float,int]] = []
+            for si, s in enumerate(sentences):
+                sc = jaccard(etoks, s["tokens"])
+                scores.append((sc, si)); bar.update(1)
+            scores.sort(reverse=True)
+            selected = [si for _, si in scores[:max(1, leak_topk)]]
+            preselect_scored += len(scores)
+            topk_for_item.append(selected)
+        bar.close()
+
+        # Judge only top-K
+        judge_total = sum(len(x) for x in topk_for_item)
+        bar2 = tqdm(total=judge_total, desc="Leakage checks", unit="call", leave=False, disable=not progress)
+        for pos, row_idx in enumerate(idx_to_check):
             exp = expecteds[row_idx]
             best_idx = None; best_conf = -1.0; best_reason = ""
-            for si, s in enumerate(sentences):
+            for si in topk_for_item[pos]:
+                s = sentences[si]
                 derived, conf, reason = judge_leakage(exp, s["text"], model=model, temperature=temperature)
-                leak_calls += 1; bar.update(1)
+                leak_calls += 1; bar2.update(1)
                 if derived and conf > best_conf:
-                    best_conf = conf; best_idx = si; best_reason = reason
+                    best_conf, best_idx, best_reason = conf, si, reason
             if best_idx is not None and best_conf >= leak_thresh:
                 s = sentences[best_idx]
                 leakage_hits.append({
@@ -238,9 +274,11 @@ def scan_dataset(
                     "score": round(float(best_conf), 3),
                     "reason": best_reason,
                 })
-        bar.close()
+        bar2.close()
     timings["leakage_sec"] = time.time() - t2
     stats["leak_calls"] = leak_calls
+    stats["leak_preselect_scored"] = preselect_scored
+    stats["leak_topk"] = leak_topk
 
     # 4) Rubric lint
     rubric_block = {"counts": {"errors": 0, "warnings": 0, "infos": 0}, "items": []}
@@ -271,10 +309,7 @@ def scan_dataset(
         },
         "dup_clusters": dup_clusters,
         "leakage": leakage_hits,
-        "intent": {
-            "items": intent_items,
-            "buckets": intent_buckets
-        },
+        "intent": {"items": intent_items, "buckets": intent_buckets},
         "rubric": rubric_block,
         "timings": timings,
         "stats": stats,

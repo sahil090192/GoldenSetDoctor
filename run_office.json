@@ -3,9 +3,9 @@
   "refs_dir": "examples/office_eval/refs",
   "counts": {
     "items": 33,
-    "dup_clusters": 2,
-    "dup_members": 3,
-    "leakage": 6,
+    "dup_clusters": 1,
+    "dup_members": 2,
+    "leakage": 5,
     "rubric_errors": 5,
     "rubric_warnings": 4
   },
@@ -20,16 +20,6 @@
       "member_inputs": [
         "How do I create a PivotTable in Excel?",
         "Create a Pivot Table from my Excel data"
-      ]
-    },
-    {
-      "canonical": "O06",
-      "canonical_input": "Freeze header row in Excel",
-      "members": [
-        "O05"
-      ],
-      "member_inputs": [
-        "How do I freeze the top row in Excel?"
       ]
     }
   ],
@@ -46,7 +36,7 @@
       "file": "examples/office_eval/refs/outlook_delay_delivery.txt",
       "snippet": "In Outlook for Windows, compose your message, choose Options > Delay Delivery, then tick \"Do not deliver before\" and pick a date and time.",
       "score": 0.9,
-      "reason": "The expected answer paraphrases the steps outlined in the reference sentence, conveying the same instructions."
+      "reason": "The expected answer paraphrases the steps provided in the reference sentence accurately."
     },
     {
       "item_id": "O16",
@@ -57,17 +47,10 @@
     },
     {
       "item_id": "O24",
-      "file": "examples/office_eval/refs/outlook_delay_delivery.txt",
-      "snippet": "In Outlook for Windows, compose your message, choose Options > Delay Delivery, then tick \"Do not deliver before\" and pick a date and time.",
+      "file": "examples/office_eval/refs/excel_shortcuts.txt",
+      "snippet": "Use F4 to repeat the last action.",
       "score": 1.0,
-      "reason": "The expected answer outlines the steps to delay delivery in Outlook for Windows, which are directly stated in the reference sentence."
-    },
-    {
-      "item_id": "O25",
-      "file": "examples/office_eval/refs/onedrive_retention.txt",
-      "snippet": "You can restore files from the recycle bin within that period.",
-      "score": 0.9,
-      "reason": "The expected answer 'Yes' implies that it is possible to restore files, which is directly supported by the reference sentence."
+      "reason": "The expected answer directly conveys the same instruction as the reference sentence."
     },
     {
       "item_id": "O26",
@@ -114,10 +97,10 @@
       {
         "id": "O06",
         "input": "Freeze header row in Excel",
-        "key": "excel|freeze|row",
+        "key": "excel|freeze|header",
         "topic": "excel",
         "slot": "freeze",
-        "scope": "row"
+        "scope": "header"
       },
       {
         "id": "O07",
@@ -138,10 +121,10 @@
       {
         "id": "O09",
         "input": "How do I track changes in Word?",
-        "key": "word|track|",
+        "key": "word|track|changes",
         "topic": "word",
         "slot": "track",
-        "scope": ""
+        "scope": "changes"
       },
       {
         "id": "O10",
@@ -155,7 +138,7 @@
         "id": "O11",
         "input": "Start the PowerPoint presentation from the beginning",
         "key": "presentation|start|beginning",
-        "topic": "presentation",
+        "topic": "powerpoint",
         "slot": "start",
         "scope": "beginning"
       },
@@ -170,9 +153,9 @@
       {
         "id": "O13",
         "input": "Create a rule to move emails in Outlook",
-        "key": "email|rule|outlook",
+        "key": "email|move|outlook",
         "topic": "email",
-        "slot": "rule",
+        "slot": "move",
         "scope": "outlook"
       },
       {
@@ -202,9 +185,9 @@
       {
         "id": "O17",
         "input": "Blur my background in Microsoft Teams",
-        "key": "microsoft-teams|background|",
-        "topic": "microsoft-teams",
-        "slot": "background",
+        "key": "microsoft-teams|blur-background|",
+        "topic": "microsoft teams",
+        "slot": "blur-background",
         "scope": ""
       },
       {
@@ -218,10 +201,10 @@
       {
         "id": "O19",
         "input": "How do I make a private channel in Microsoft Teams?",
-        "key": "microsoft-teams|create|private-channel",
+        "key": "microsoft-teams|private-channel|",
         "topic": "microsoft-teams",
-        "slot": "create",
-        "scope": "private-channel"
+        "slot": "private-channel",
+        "scope": ""
       },
       {
         "id": "O20",
@@ -322,10 +305,10 @@
       {
         "id": "O33",
         "input": "Insert a table of contents in Word",
-        "key": "word|table-of-contents|",
+        "key": "word|insert|table-of-contents",
         "topic": "word",
-        "slot": "table-of-contents",
-        "scope": ""
+        "slot": "insert",
+        "scope": "table-of-contents"
       },
       {
         "id": "O34",
@@ -364,21 +347,7 @@
         ]
       },
       {
-        "key": "excel|freeze|row",
-        "size": 2,
-        "members": [
-          {
-            "id": "O05",
-            "input": "How do I freeze the top row in Excel?"
-          },
-          {
-            "id": "O06",
-            "input": "Freeze header row in Excel"
-          }
-        ]
-      },
-      {
-        "key": "email|rule|outlook",
+        "key": "email|move|outlook",
         "size": 1,
         "members": [
           {
@@ -404,6 +373,26 @@
           {
             "id": "O31",
             "input": "Count duplicates in an Excel column"
+          }
+        ]
+      },
+      {
+        "key": "excel|freeze|header",
+        "size": 1,
+        "members": [
+          {
+            "id": "O06",
+            "input": "Freeze header row in Excel"
+          }
+        ]
+      },
+      {
+        "key": "excel|freeze|row",
+        "size": 1,
+        "members": [
+          {
+            "id": "O05",
+            "input": "How do I freeze the top row in Excel?"
           }
         ]
       },
@@ -468,7 +457,7 @@
         ]
       },
       {
-        "key": "microsoft-teams|background|",
+        "key": "microsoft-teams|blur-background|",
         "size": 1,
         "members": [
           {
@@ -478,7 +467,7 @@
         ]
       },
       {
-        "key": "microsoft-teams|create|private-channel",
+        "key": "microsoft-teams|private-channel|",
         "size": 1,
         "members": [
           {
@@ -618,22 +607,22 @@
         ]
       },
       {
+        "key": "word|insert|table-of-contents",
+        "size": 1,
+        "members": [
+          {
+            "id": "O33",
+            "input": "Insert a table of contents in Word"
+          }
+        ]
+      },
+      {
         "key": "word|page-numbering|",
         "size": 1,
         "members": [
           {
             "id": "O08",
             "input": "Where do I find page numbering in Word?"
-          }
-        ]
-      },
-      {
-        "key": "word|table-of-contents|",
-        "size": 1,
-        "members": [
-          {
-            "id": "O33",
-            "input": "Insert a table of contents in Word"
           }
         ]
       },
@@ -648,7 +637,7 @@
         ]
       },
       {
-        "key": "word|track|",
+        "key": "word|track|changes",
         "size": 1,
         "members": [
           {
@@ -698,13 +687,13 @@
             "severity": "warn",
             "code": "ambiguous_llm",
             "reason": "LLM flagged missing scope or vague phrasing.",
-            "suggest": "Specify the software or context for exporting to PDF and provide an expected outcome or criteria for evaluation."
+            "suggest": "Specify what content or data needs to be exported to PDF and provide a clear expected answer."
           },
           {
             "severity": "error",
             "code": "not_gradeable",
             "reason": "LLM judged the expected answer not sufficiently objective to grade.",
-            "suggest": "Specify the software or context for exporting to PDF and provide an expected outcome or criteria for evaluation."
+            "suggest": "Specify what content or data needs to be exported to PDF and provide a clear expected answer."
           }
         ]
       },
@@ -722,7 +711,7 @@
             "severity": "error",
             "code": "not_gradeable",
             "reason": "LLM judged the expected answer not sufficiently objective to grade.",
-            "suggest": "Provide detailed steps on how to turn on dark mode in a specific version of Office."
+            "suggest": "Provide detailed steps on how to turn on dark mode in Office or confirm that it has been successfully activated."
           }
         ]
       },
@@ -753,19 +742,21 @@
     ]
   },
   "timings": {
-    "intent_sec": 47.69112181663513,
-    "duplicates_sec": 13.003775835037231,
-    "leakage_sec": 371.81775307655334,
-    "rubric_sec": 66.6636233329773,
-    "total_sec": 499.176274061203
+    "intent_sec": 39.08789896965027,
+    "duplicates_sec": 6.453366756439209,
+    "leakage_sec": 161.79247784614563,
+    "rubric_sec": 50.28067994117737,
+    "total_sec": 257.6144235134125
   },
   "stats": {
     "intent_calls": 33,
-    "buckets": 30,
-    "bucket_calls": 2,
-    "dup_pair_verifications": 4,
+    "buckets": 31,
+    "bucket_calls": 1,
+    "dup_pair_verifications": 3,
     "dup_pairs_total": 528,
-    "dup_pairs_within_buckets": 4,
-    "leak_calls": 256
+    "dup_pairs_within_buckets": 3,
+    "leak_calls": 128,
+    "leak_preselect_scored": 256,
+    "leak_topk": 4
   }
 }

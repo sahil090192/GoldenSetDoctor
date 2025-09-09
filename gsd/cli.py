@@ -23,6 +23,7 @@ def scan(
     temperature: float = typer.Option(0.0, "--temperature", help="LLM temperature"),
     dup_thresh: float = typer.Option(0.6, "--dup-thresh", help="Pair verification threshold (bucket-verify)"),
     leak_thresh: float = typer.Option(0.6, "--leak-thresh", help="Leakage threshold"),
+    leak_topk: int = typer.Option(5, "--leak-topk", help="Preselect top-K candidate sentences per item before LLM leakage check"),
     respect_open_book: bool = typer.Option(True, "--respect-open-book/--no-respect-open-book",
                                            help="If true, do not count leakage for items with context_url"),
     progress: bool = typer.Option(True, "--progress/--no-progress", help="Show progress bars"),
@@ -47,15 +48,17 @@ def scan(
         rubric_llm=rubric_llm,
         rubric_short_min_words=rubric_short_min_words,
         rubric_long_max_words=rubric_long_max_words,
+        leak_topk=leak_topk,
     )
     save_run(run, out)
     t = run.get("timings", {})
     s = run.get("stats", {})
     c = run.get("counts", {})
-    print(f"✓ Scan complete. dups={c.get('dup_members',0)} clusters={c.get('dup_clusters',0)} leakage={c.get('leakage',0)} rubric_err={c.get('rubric_errors',0)} warn={c.get('rubric_warnings',0)}")
-    print(f"  pair_mode={pair_mode}  time: total={t.get('total_sec',0):.2f}s  (intent={t.get('intent_sec',0):.2f}s, dups={t.get('duplicates_sec',0):.2f}s, leak={t.get('leakage_sec',0):.2f}s, rubric={t.get('rubric_sec',0):.2f}s)")
-    print(f"  buckets={s.get('buckets',0)}  bucket_calls={s.get('bucket_calls',0)}  dup_pair_verifications={s.get('dup_pair_verifications',0)}")
-    print(f"  pairs_total_est={s.get('dup_pairs_total','?')}  pairs_within_buckets={s.get('dup_pairs_within_buckets','?')}  leak_calls={s.get('leak_calls',0)}")
+    print(f"✓ Scan complete. duplicates={c.get('dup_members',0)} clusters={c.get('dup_clusters',0)} leakage={c.get('leakage',0)} rubric_err={c.get('rubric_errors',0)} warn={c.get('rubric_warnings',0)}")
+    print(f"  pair_mode={pair_mode}  time: total={t.get('total_sec',0):.2f}s  (intent={t.get('intent_sec',0):.2f}s, duplicates={t.get('duplicates_sec',0):.2f}s, leakage={t.get('leakage_sec',0):.2f}s, rubric={t.get('rubric_sec',0):.2f}s)")
+    print(f"  buckets={s.get('buckets',0)}  bucket_calls={s.get('bucket_calls',0)}  dup_verifications={s.get('dup_pair_verifications',0)}")
+    print(f"  pairs_total_est={s.get('dup_pairs_total','?')}  pairs_within_buckets={s.get('dup_pairs_within_buckets','?')}")
+    print(f"  leak_topk={s.get('leak_topk','?')}  leak_preselect_scored={s.get('leak_preselect_scored',0)}  leak_calls={s.get('leak_calls',0)}")
     print(f"  wrote {out}")
 
 @app.command()
