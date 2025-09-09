@@ -1,0 +1,1 @@
+Items in the recycle bin are kept for about 30 days by default. You can restore files from the recycle bin within that period.

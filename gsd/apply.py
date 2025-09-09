@@ -1,60 +1,121 @@
 # gsd/apply.py
 from __future__ import annotations
+from typing import Dict, Any, List, Tuple
 from pathlib import Path
-from typing import Dict, Any, List, Set
-from .utils import load_jsonl, save_jsonl
+import json
 
-def _index_by_id(items: List[Dict[str, Any]]):
-    idx = {}
-    for i, it in enumerate(items):
-        idx[it.get("id", f"it_{i}")] = i
-    return idx
+def _read_jsonl(path: Path) -> List[Dict[str, Any]]:
+    rows = []
+    with path.open("r", encoding="utf-8") as f:
+        for line in f:
+            line = line.strip()
+            if not line:
+                continue
+            rows.append(json.loads(line))
+    return rows
 
-def _append_variant(canon: Dict[str, Any], variant_expected: str):
-    if not variant_expected: return
-    if "accepted" not in canon or not isinstance(canon["accepted"], list):
-        canon["accepted"] = []
-    if variant_expected != canon.get("expected") and variant_expected not in canon["accepted"]:
-        canon["accepted"].append(variant_expected)
+def _write_jsonl(path: Path, rows: List[Dict[str, Any]]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("w", encoding="utf-8") as f:
+        for r in rows:
+            f.write(json.dumps(r, ensure_ascii=False) + "\n")
 
-def apply_autofix(run: Dict[str, Any], dataset_path: str, out_dataset_path: str, changelog_path: str):
-    items = load_jsonl(dataset_path)
-    id2idx = _index_by_id(items)
-    removed_ids: Set[str] = set()
-    modified_ids: Set[str] = set()
+def _ensure_list(x):
+    return x if isinstance(x, list) else ([] if x is None else [x])
 
+def apply_autofix(run: Dict[str, Any], *, dataset_path: str, out_dataset_path: str, changelog_path: str) -> None:
+    """
+    - Merge duplicates: keep canonical, append member expected/accepted into canonical.accepted
+    - Mark leakage items as open-book by setting context_url to the matched file (if empty)
+    - DOES NOT auto-edit rubric issues; lists them in CHANGELOG for human action
+    """
+    src = Path(dataset_path)
+    rows = _read_jsonl(src)
+    by_id = {r.get("id"): r for r in rows}
+    order = [r.get("id") for r in rows]
+
+    removed_ids: List[str] = []
+    merged_into: Dict[str, List[str]] = {}
+    leakage_marked: List[Tuple[str, str]] = []  # (id, file)
+
+    # 1) merge duplicates
     for cl in run.get("dup_clusters", []):
         canon_id = cl["canonical"]
-        canon_idx = id2idx.get(canon_id)
-        if canon_idx is None: continue
-        canon_item = items[canon_idx]
-        for mid in cl["members"]:
-            m_idx = id2idx.get(mid)
-            if m_idx is None or mid in removed_ids: continue
-            m_item = items[m_idx]
-            _append_variant(canon_item, m_item.get("expected",""))
-            removed_ids.add(mid); modified_ids.add(canon_id)
+        members = cl.get("members", [])
+        if canon_id not in by_id:
+            continue
+        canon = by_id[canon_id]
+        canon.setdefault("accepted", [])
+        canon_acc = set(canon["accepted"])
 
-    if removed_ids:
-        items = [it for it in items if it.get("id") not in removed_ids]
-        id2idx = _index_by_id(items)
+        # Include canonical expected into accepted? Not necessary; keep as-is
+        for mid in members:
+            m = by_id.get(mid)
+            if not m:
+                continue
+            # Move member expected + accepted into canonical.accepted
+            mex = m.get("expected")
+            if mex and mex not in canon_acc:
+                canon["accepted"].append(mex); canon_acc.add(mex)
+            for a in _ensure_list(m.get("accepted")):
+                if a and a not in canon_acc:
+                    canon["accepted"].append(a); canon_acc.add(a)
+            # Remove member
+            removed_ids.append(mid)
+            merged_into.setdefault(canon_id, []).append(mid)
+            by_id.pop(mid, None)
 
-    for leak in run.get("leakage", []):
-        lid = leak["item_id"]; idx = id2idx.get(lid)
-        if idx is None: continue
-        it = items[idx]
-        if "context_url" not in it:
-            it["context_url"] = leak["file"]; modified_ids.add(lid)
+    # rebuild ordered list without removed
+    new_rows: List[Dict[str, Any]] = []
+    for i in order:
+        if i not in by_id:
+            continue
+        new_rows.append(by_id[i])
 
-    save_jsonl(items, out_dataset_path)
+    # 2) mark leakage as open-book (context_url)
+    for hit in run.get("leakage", []):
+        iid = hit.get("item_id")
+        fpath = hit.get("file")
+        if iid in by_id:
+            it = by_id[iid]
+            if not it.get("context_url"):
+                it["context_url"] = fpath
+                leakage_marked.append((iid, fpath))
 
-    added = 0; removed = len(removed_ids); modified = len(modified_ids)
-    lines = [
-        "## v2 (auto-fix)",
-        f"- Removals (dup members): {removed}",
-        f"- Modifications (variants/context): {modified}",
-        f"- Additions: {added}", "", "### Details",
-    ]
-    if removed_ids: lines.append(f"- Removed IDs: {', '.join(sorted(removed_ids))}")
-    if modified_ids: lines.append(f"- Modified IDs: {', '.join(sorted(modified_ids))}")
-    Path(changelog_path).write_text("\n".join(lines) + "\n", encoding="utf-8")
+    # 3) write dataset_v2
+    _write_jsonl(Path(out_dataset_path), new_rows)
+
+    # 4) changelog
+    rub = run.get("rubric", {})
+    err_count = rub.get("counts", {}).get("errors", 0)
+    warn_count = rub.get("counts", {}).get("warnings", 0)
+
+    lines: List[str] = []
+    lines.append("# Golden-Set Doctor: Applied Fixes\n")
+    lines.append(f"- Source dataset: `{dataset_path}`\n")
+    lines.append(f"- Output dataset: `{out_dataset_path}`\n")
+
+    if merged_into:
+        lines.append("## Duplicate merges\n")
+        for cid, mids in merged_into.items():
+            mids_s = ", ".join(f"`{m}`" for m in mids)
+            lines.append(f"- Kept `{cid}` as canonical; merged members: {mids_s}. Appended members' expected/accepted to canonical `accepted`.")
+        lines.append("")
+
+    if leakage_marked:
+        lines.append("## Leakage marked as open-book\n")
+        for iid, fp in leakage_marked:
+            lines.append(f"- `{iid}`: set `context_url` to `{fp}`")
+        lines.append("")
+
+    if err_count or warn_count:
+        lines.append("## Rubric issues (manual action suggested)\n")
+        lines.append(f"- Errors: **{err_count}**, Warnings: **{warn_count}**\n")
+        # list first few examples
+        for it in rub.get("items", [])[:20]:
+            iid = it.get("id", "")
+            for iss in it.get("issues", []):
+                lines.append(f"  - `{iid}` [{iss.get('severity')}:{iss.get('code')}]: {iss.get('reason')}  \n    Suggest: {iss.get('suggest','')}")
+        lines.append("")
+
+    Path(changelog_path).write_text("\n".join(lines), encoding="utf-8")

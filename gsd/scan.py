@@ -10,6 +10,7 @@ from .utils import load_jsonl, item_input_text, item_expected_text, iter_doc_sen
 from .judge_llm import (
     intent_keys, bucket_cluster, judge_duplicate, judge_leakage
 )
+from .rubric_lint import lint_dataset  # NEW
 
 def _build_dup_clusters(idx_clusters: List[List[int]], ids: List[str], inputs: List[str], expecteds: List[str]):
     dup_clusters = []
@@ -115,6 +116,10 @@ def scan_dataset(
     respect_open_book: bool = True,
     progress: bool = True,
     pair_mode: str = "bucket-verify",  # all | bucket | bucket-verify
+    rubric: bool = True,
+    rubric_llm: bool = True,
+    rubric_short_min_words: int = 6,
+    rubric_long_max_words: int = 100,
 ) -> Dict[str, Any]:
     if not model:
         raise ValueError("model is required (pass --model).")
@@ -158,7 +163,6 @@ def scan_dataset(
             "size": len(idxs),
             "members": [{"id": ids[i], "input": inputs[i]} for i in idxs]
         })
-    # sort buckets by size desc, then key
     intent_buckets.sort(key=lambda b: (-b["size"], b["key"]))
 
     # 2) Duplicates
@@ -211,7 +215,6 @@ def scan_dataset(
     t2 = time.time()
     if refs_dir:
         sentences = iter_doc_sentences(refs_dir)
-        # Only judge items that aren't open-book when respect_open_book=True
         idx_to_check = [
             i for i in range(len(expecteds))
             if not (respect_open_book and items[i].get("context_url"))
@@ -239,7 +242,21 @@ def scan_dataset(
     timings["leakage_sec"] = time.time() - t2
     stats["leak_calls"] = leak_calls
 
-    timings["total_sec"] = sum(timings.values())
+    # 4) Rubric lint
+    rubric_block = {"counts": {"errors": 0, "warnings": 0, "infos": 0}, "items": []}
+    if rubric:
+        rres, rtime = lint_dataset(
+            items,
+            short_min_words=rubric_short_min_words,
+            long_max_words=rubric_long_max_words,
+            use_llm=rubric_llm,
+            model=model if rubric_llm else "",
+            temperature=temperature
+        )
+        rubric_block = rres
+        timings["rubric_sec"] = rtime
+
+    timings["total_sec"] = sum(v for v in timings.values())
 
     run = {
         "dataset": str(ds_path.as_posix()),
@@ -249,6 +266,8 @@ def scan_dataset(
             "dup_clusters": len(dup_clusters),
             "dup_members": dup_members,
             "leakage": len(leakage_hits),
+            "rubric_errors": rubric_block["counts"]["errors"],
+            "rubric_warnings": rubric_block["counts"]["warnings"],
         },
         "dup_clusters": dup_clusters,
         "leakage": leakage_hits,
@@ -256,6 +275,7 @@ def scan_dataset(
             "items": intent_items,
             "buckets": intent_buckets
         },
+        "rubric": rubric_block,
         "timings": timings,
         "stats": stats,
     }

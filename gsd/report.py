@@ -18,12 +18,14 @@ code{background:#f3f4f6;border:1px solid #e5e7eb;padding:2px 4px;border-radius:6
 .small{color:#6b7280;font-size:12px;}
 footer{margin-top:28px;color:#6b7280;font-size:12px;}
 .section{margin-top:18px;}
+.issue-err{background:#fee2e2;border:1px solid #fecaca;padding:2px 6px;border-radius:8px;font-size:12px;}
+.issue-warn{background:#fef3c7;border:1px solid #fde68a;padding:2px 6px;border-radius:8px;font-size:12px;}
 """
 
 def render_html(run: Dict[str, Any]) -> str:
     c = run["counts"]
     dup_pct = (100.0 * c["dup_members"] / max(1, c["items"]))
-    status = "Healthy ✅" if (c["dup_members"] == 0 and c["leakage"] == 0) else "Needs attention ⚠️"
+    status = "Healthy ✅" if (c["dup_members"] == 0 and c["leakage"] == 0 and c.get("rubric_errors",0)==0) else "Needs attention ⚠️"
 
     head = (
         "<!doctype html><html><head><meta charset='utf-8'>"
@@ -40,6 +42,8 @@ def render_html(run: Dict[str, Any]) -> str:
     body.append(card("Dup clusters", str(c["dup_clusters"])))
     body.append(card("Dup members", f"{c['dup_members']} ({dup_pct:.1f}%)"))
     body.append(card("Leakage", str(c["leakage"])))
+    body.append(card("Rubric errors", str(c.get("rubric_errors", 0))))
+    body.append(card("Rubric warnings", str(c.get("rubric_warnings", 0))))
     body.append("</div>")
 
     # Intent buckets (grouped)
@@ -111,6 +115,31 @@ def render_html(run: Dict[str, Any]) -> str:
                 f"<td>{html.escape(reason)}</td>"
                 f"<td>{html.escape(hit['snippet'])}</td></tr>"
             )
+        rows.append("</tbody></table>")
+        body += rows
+        body.append("</div>")
+
+    # Rubric issues
+    rub = run.get("rubric", {})
+    if rub and rub.get("items"):
+        body.append("<div class='section'><h2>Rubric issues</h2>")
+        rows = ["<table><thead><tr><th>ID</th><th>Input</th><th>Severity</th><th>Code</th><th>Reason</th><th>Suggested fix</th></tr></thead><tbody>"]
+        for it in rub.get("items", []):
+            rid = it.get("id", "")
+            rin = it.get("input", "")
+            for iss in it.get("issues", []):
+                sev = iss.get("severity", "info")
+                badge = f"<span class='issue-err'>error</span>" if sev == "error" else (f"<span class='issue-warn'>warn</span>" if sev == "warn" else "info")
+                rows.append(
+                    "<tr>"
+                    f"<td><code>{html.escape(str(rid))}</code></td>"
+                    f"<td>{html.escape(rin)}</td>"
+                    f"<td>{badge}</td>"
+                    f"<td><code>{html.escape(iss.get('code',''))}</code></td>"
+                    f"<td>{html.escape(iss.get('reason',''))}</td>"
+                    f"<td>{html.escape(iss.get('suggest',''))}</td>"
+                    "</tr>"
+                )
         rows.append("</tbody></table>")
         body += rows
         body.append("</div>")

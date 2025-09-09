@@ -12,7 +12,7 @@ else:
     from .report import save_html
     from .apply import apply_autofix
 
-app = typer.Typer(help="Golden-Set Doctor (LLM-only, intent-bucketed)")
+app = typer.Typer(help="Golden-Set Doctor (LLM-only, intent-bucketed + rubric lint)")
 
 @app.command()
 def scan(
@@ -28,6 +28,10 @@ def scan(
     progress: bool = typer.Option(True, "--progress/--no-progress", help="Show progress bars"),
     pair_mode: str = typer.Option("bucket-verify", "--pair-mode",
                                   help="Duplicates strategy: all | bucket | bucket-verify"),
+    rubric: bool = typer.Option(True, "--rubric/--no-rubric", help="Run rubric lint"),
+    rubric_llm: bool = typer.Option(True, "--rubric-llm/--no-rubric-llm", help="Use LLM for rubric checks"),
+    rubric_short_min_words: int = typer.Option(6, "--rubric-short-min-words", help="Min words before 'too short'"),
+    rubric_long_max_words: int = typer.Option(100, "--rubric-long-max-words", help="Max words before 'too long'"),
 ):
     run = scan_dataset(
         dataset_path=dataset,
@@ -39,12 +43,17 @@ def scan(
         respect_open_book=respect_open_book,
         progress=progress,
         pair_mode=pair_mode,
+        rubric=rubric,
+        rubric_llm=rubric_llm,
+        rubric_short_min_words=rubric_short_min_words,
+        rubric_long_max_words=rubric_long_max_words,
     )
     save_run(run, out)
     t = run.get("timings", {})
     s = run.get("stats", {})
-    print(f"✓ Scan complete. dups={run['counts']['dup_members']} clusters={run['counts']['dup_clusters']} leakage={run['counts']['leakage']}")
-    print(f"  pair_mode={pair_mode}  time: total={t.get('total_sec',0):.2f}s  (intent={t.get('intent_sec',0):.2f}s, dups={t.get('duplicates_sec',0):.2f}s, leak={t.get('leakage_sec',0):.2f}s)")
+    c = run.get("counts", {})
+    print(f"✓ Scan complete. dups={c.get('dup_members',0)} clusters={c.get('dup_clusters',0)} leakage={c.get('leakage',0)} rubric_err={c.get('rubric_errors',0)} warn={c.get('rubric_warnings',0)}")
+    print(f"  pair_mode={pair_mode}  time: total={t.get('total_sec',0):.2f}s  (intent={t.get('intent_sec',0):.2f}s, dups={t.get('duplicates_sec',0):.2f}s, leak={t.get('leakage_sec',0):.2f}s, rubric={t.get('rubric_sec',0):.2f}s)")
     print(f"  buckets={s.get('buckets',0)}  bucket_calls={s.get('bucket_calls',0)}  dup_pair_verifications={s.get('dup_pair_verifications',0)}")
     print(f"  pairs_total_est={s.get('dup_pairs_total','?')}  pairs_within_buckets={s.get('dup_pairs_within_buckets','?')}  leak_calls={s.get('leak_calls',0)}")
     print(f"  wrote {out}")

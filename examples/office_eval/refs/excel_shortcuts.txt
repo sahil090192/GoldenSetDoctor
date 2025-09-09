@@ -1,0 +1,1 @@
+Common Excel shortcuts: Press Ctrl+C to copy. Press Ctrl+V to paste. Press Ctrl+Z to undo. Use F4 to repeat the last action.

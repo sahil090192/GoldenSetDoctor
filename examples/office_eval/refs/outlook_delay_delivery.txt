@@ -1,0 +1,1 @@
+In Outlook for Windows, compose your message, choose Options > Delay Delivery, then tick "Do not deliver before" and pick a date and time.

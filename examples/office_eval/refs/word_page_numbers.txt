@@ -1,0 +1,1 @@
+To add page numbers in Word: Go to Insert > Page Number, choose Top of Page or Bottom of Page, then select a style.

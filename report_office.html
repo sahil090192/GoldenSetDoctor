@@ -1,0 +1,128 @@
+<!doctype html><html><head><meta charset='utf-8'><title>Golden-Set Doctor Report</title><style>
+body{font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Helvetica,Arial,sans-serif;margin:24px;}
+h1{margin:0 0 8px 0;}
+.cards{display:flex;gap:12px;flex-wrap:wrap;margin:12px 0 20px;}
+.card{border:1px solid #e5e7eb;border-radius:12px;padding:12px 14px;min-width:160px;box-shadow:0 1px 2px rgba(0,0,0,.03);}
+.card .k{font-size:12px;color:#6b7280;text-transform:uppercase;letter-spacing:.04em;}
+.card .v{font-size:20px;font-weight:600;margin-top:4px;}
+table{border-collapse:collapse;width:100%;margin-top:8px;}
+th,td{border:1px solid #e5e7eb;padding:8px 10px;text-align:left;vertical-align:top;}
+th{background:#f9fafb;font-weight:600;}
+code{background:#f3f4f6;border:1px solid #e5e7eb;padding:2px 4px;border-radius:6px;}
+.small{color:#6b7280;font-size:12px;}
+footer{margin-top:28px;color:#6b7280;font-size:12px;}
+.section{margin-top:18px;}
+.issue-err{background:#fee2e2;border:1px solid #fecaca;padding:2px 6px;border-radius:8px;font-size:12px;}
+.issue-warn{background:#fef3c7;border:1px solid #fde68a;padding:2px 6px;border-radius:8px;font-size:12px;}
+</style></head><body><h1>Golden-Set Doctor Report</h1>
+<div class='small'>Dataset: <code>examples/office_eval/dataset_office40.jsonl</code></div>
+<div class='cards'>
+<div class='card'><div class='k'>Status</div><div class='v'>Needs attention ⚠️</div></div>
+<div class='card'><div class='k'>Items</div><div class='v'>33</div></div>
+<div class='card'><div class='k'>Dup clusters</div><div class='v'>2</div></div>
+<div class='card'><div class='k'>Dup members</div><div class='v'>3 (9.1%)</div></div>
+<div class='card'><div class='k'>Leakage</div><div class='v'>6</div></div>
+<div class='card'><div class='k'>Rubric errors</div><div class='v'>5</div></div>
+<div class='card'><div class='k'>Rubric warnings</div><div class='v'>4</div></div>
+</div>
+<div class='section'><h2>Intent buckets</h2>
+<table><thead><tr><th>Intent key</th><th>Members</th></tr></thead><tbody>
+<tr><td><code>excel|pivot-table|</code> &nbsp;<span class='small'>(n=3)</span></td><td><code>O01</code>: How do I create a PivotTable in Excel?<br><code>O02</code>: Create a Pivot Table from my Excel data<br><code>O27</code>: Steps to build a pivot table from data in Excel</td></tr>
+<tr><td><code>excel|freeze|row</code> &nbsp;<span class='small'>(n=2)</span></td><td><code>O05</code>: How do I freeze the top row in Excel?<br><code>O06</code>: Freeze header row in Excel</td></tr>
+<tr><td><code>email|rule|outlook</code> &nbsp;<span class='small'>(n=1)</span></td><td><code>O13</code>: Create a rule to move emails in Outlook</td></tr>
+<tr><td><code>email|schedule|outlook</code> &nbsp;<span class='small'>(n=1)</span></td><td><code>O15</code>: Schedule an email to send later in Outlook</td></tr>
+<tr><td><code>excel|count|duplicates</code> &nbsp;<span class='small'>(n=1)</span></td><td><code>O31</code>: Count duplicates in an Excel column</td></tr>
+<tr><td><code>excel|paste|</code> &nbsp;<span class='small'>(n=1)</span></td><td><code>O26</code>: How to paste in Excel?</td></tr>
+<tr><td><code>excel|repeated-values|</code> &nbsp;<span class='small'>(n=1)</span></td><td><code>O32</code>: How do I find repeated values in a column in Excel?</td></tr>
+<tr><td><code>excel|vlookup|</code> &nbsp;<span class='small'>(n=1)</span></td><td><code>O21</code>: How do I use VLOOKUP in Excel?</td></tr>
+<tr><td><code>excel|vlookup|sheets</code> &nbsp;<span class='small'>(n=1)</span></td><td><code>O22</code>: VLOOKUP across sheets in Excel</td></tr>
+<tr><td><code>export|pdf|</code> &nbsp;<span class='small'>(n=1)</span></td><td><code>O24</code>: Export to PDF</td></tr>
+<tr><td><code>meeting|schedule|teams</code> &nbsp;<span class='small'>(n=1)</span></td><td><code>O34</code>: Schedule a meeting in Teams</td></tr>
+<tr><td><code>microsoft-teams|background|</code> &nbsp;<span class='small'>(n=1)</span></td><td><code>O17</code>: Blur my background in Microsoft Teams</td></tr>
+<tr><td><code>microsoft-teams|create|private-channel</code> &nbsp;<span class='small'>(n=1)</span></td><td><code>O19</code>: How do I make a private channel in Microsoft Teams?</td></tr>
+<tr><td><code>office|dark-mode|</code> &nbsp;<span class='small'>(n=1)</span></td><td><code>O25</code>: Turn on dark mode in Office</td></tr>
+<tr><td><code>onedrive|deleted-files|duration</code> &nbsp;<span class='small'>(n=1)</span></td><td><code>O16</code>: How long are deleted files kept in OneDrive?</td></tr>
+<tr><td><code>onedrive|file|external</code> &nbsp;<span class='small'>(n=1)</span></td><td><code>O29</code>: Share a OneDrive file externally</td></tr>
+<tr><td><code>outlook|move|automatically</code> &nbsp;<span class='small'>(n=1)</span></td><td><code>O14</code>: How to automatically move messages to a folder in Outlook?</td></tr>
+<tr><td><code>outlook|signature|</code> &nbsp;<span class='small'>(n=1)</span></td><td><code>O35</code>: Add a signature in Outlook</td></tr>
+<tr><td><code>pivot|format|table</code> &nbsp;<span class='small'>(n=1)</span></td><td><code>O28</code>: Create a pivot and format the range as a table</td></tr>
+<tr><td><code>powerpoint|embed|video</code> &nbsp;<span class='small'>(n=1)</span></td><td><code>O30</code>: Embed a video in a PowerPoint slide</td></tr>
+<tr><td><code>presentation|method|powerpoint</code> &nbsp;<span class='small'>(n=1)</span></td><td><code>O12</code>: How do I present from the first slide in PowerPoint?</td></tr>
+<tr><td><code>presentation|start|beginning</code> &nbsp;<span class='small'>(n=1)</span></td><td><code>O11</code>: Start the PowerPoint presentation from the beginning</td></tr>
+<tr><td><code>sharepoint|list|create</code> &nbsp;<span class='small'>(n=1)</span></td><td><code>O20</code>: Create a new list in SharePoint</td></tr>
+<tr><td><code>teams|channel|private</code> &nbsp;<span class='small'>(n=1)</span></td><td><code>O18</code>: Create a private channel in Teams</td></tr>
+<tr><td><code>theme|change|</code> &nbsp;<span class='small'>(n=1)</span></td><td><code>O23</code>: How do I change the theme?</td></tr>
+<tr><td><code>word|add-page-numbers|</code> &nbsp;<span class='small'>(n=1)</span></td><td><code>O07</code>: How do I add page numbers in Word?</td></tr>
+<tr><td><code>word|page-numbering|</code> &nbsp;<span class='small'>(n=1)</span></td><td><code>O08</code>: Where do I find page numbering in Word?</td></tr>
+<tr><td><code>word|table-of-contents|</code> &nbsp;<span class='small'>(n=1)</span></td><td><code>O33</code>: Insert a table of contents in Word</td></tr>
+<tr><td><code>word|track-changes|</code> &nbsp;<span class='small'>(n=1)</span></td><td><code>O10</code>: Turn on Track Changes in Word</td></tr>
+<tr><td><code>word|track|</code> &nbsp;<span class='small'>(n=1)</span></td><td><code>O09</code>: How do I track changes in Word?</td></tr>
+</tbody></table>
+</div>
+<div class='section'><h2>Per-item intent keys</h2>
+<table><thead><tr><th>ID</th><th>Input</th><th>Intent key</th><th>Topic</th><th>Slot</th><th>Scope</th></tr></thead><tbody>
+<tr><td><code>O01</code></td><td>How do I create a PivotTable in Excel?</td><td><code>excel|pivot-table|</code></td><td>excel</td><td>pivot-table</td><td></td></tr>
+<tr><td><code>O02</code></td><td>Create a Pivot Table from my Excel data</td><td><code>excel|pivot-table|</code></td><td>excel</td><td>pivot-table</td><td></td></tr>
+<tr><td><code>O27</code></td><td>Steps to build a pivot table from data in Excel</td><td><code>excel|pivot-table|</code></td><td>excel</td><td>pivot-table</td><td></td></tr>
+<tr><td><code>O05</code></td><td>How do I freeze the top row in Excel?</td><td><code>excel|freeze|row</code></td><td>excel</td><td>freeze</td><td>row</td></tr>
+<tr><td><code>O06</code></td><td>Freeze header row in Excel</td><td><code>excel|freeze|row</code></td><td>excel</td><td>freeze</td><td>row</td></tr>
+<tr><td><code>O07</code></td><td>How do I add page numbers in Word?</td><td><code>word|add-page-numbers|</code></td><td>word</td><td>add-page-numbers</td><td></td></tr>
+<tr><td><code>O08</code></td><td>Where do I find page numbering in Word?</td><td><code>word|page-numbering|</code></td><td>word</td><td>page-numbering</td><td></td></tr>
+<tr><td><code>O09</code></td><td>How do I track changes in Word?</td><td><code>word|track|</code></td><td>word</td><td>track</td><td></td></tr>
+<tr><td><code>O10</code></td><td>Turn on Track Changes in Word</td><td><code>word|track-changes|</code></td><td>word</td><td>track-changes</td><td></td></tr>
+<tr><td><code>O11</code></td><td>Start the PowerPoint presentation from the beginning</td><td><code>presentation|start|beginning</code></td><td>presentation</td><td>start</td><td>beginning</td></tr>
+<tr><td><code>O12</code></td><td>How do I present from the first slide in PowerPoint?</td><td><code>presentation|method|powerpoint</code></td><td>presentation</td><td>method</td><td>powerpoint</td></tr>
+<tr><td><code>O13</code></td><td>Create a rule to move emails in Outlook</td><td><code>email|rule|outlook</code></td><td>email</td><td>rule</td><td>outlook</td></tr>
+<tr><td><code>O14</code></td><td>How to automatically move messages to a folder in Outlook?</td><td><code>outlook|move|automatically</code></td><td>outlook</td><td>move</td><td>automatically</td></tr>
+<tr><td><code>O15</code></td><td>Schedule an email to send later in Outlook</td><td><code>email|schedule|outlook</code></td><td>email</td><td>schedule</td><td>outlook</td></tr>
+<tr><td><code>O16</code></td><td>How long are deleted files kept in OneDrive?</td><td><code>onedrive|deleted-files|duration</code></td><td>onedrive</td><td>deleted-files</td><td>duration</td></tr>
+<tr><td><code>O17</code></td><td>Blur my background in Microsoft Teams</td><td><code>microsoft-teams|background|</code></td><td>microsoft-teams</td><td>background</td><td></td></tr>
+<tr><td><code>O18</code></td><td>Create a private channel in Teams</td><td><code>teams|channel|private</code></td><td>teams</td><td>channel</td><td>private</td></tr>
+<tr><td><code>O19</code></td><td>How do I make a private channel in Microsoft Teams?</td><td><code>microsoft-teams|create|private-channel</code></td><td>microsoft-teams</td><td>create</td><td>private-channel</td></tr>
+<tr><td><code>O20</code></td><td>Create a new list in SharePoint</td><td><code>sharepoint|list|create</code></td><td>sharepoint</td><td>list</td><td>create</td></tr>
+<tr><td><code>O21</code></td><td>How do I use VLOOKUP in Excel?</td><td><code>excel|vlookup|</code></td><td>excel</td><td>vlookup</td><td></td></tr>
+<tr><td><code>O22</code></td><td>VLOOKUP across sheets in Excel</td><td><code>excel|vlookup|sheets</code></td><td>excel</td><td>vlookup</td><td>sheets</td></tr>
+<tr><td><code>O23</code></td><td>How do I change the theme?</td><td><code>theme|change|</code></td><td>theme</td><td>change</td><td></td></tr>
+<tr><td><code>O24</code></td><td>Export to PDF</td><td><code>export|pdf|</code></td><td>export</td><td>pdf</td><td></td></tr>
+<tr><td><code>O25</code></td><td>Turn on dark mode in Office</td><td><code>office|dark-mode|</code></td><td>office</td><td>dark-mode</td><td></td></tr>
+<tr><td><code>O26</code></td><td>How to paste in Excel?</td><td><code>excel|paste|</code></td><td>excel</td><td>paste</td><td></td></tr>
+<tr><td><code>O28</code></td><td>Create a pivot and format the range as a table</td><td><code>pivot|format|table</code></td><td>pivot</td><td>format</td><td>table</td></tr>
+<tr><td><code>O29</code></td><td>Share a OneDrive file externally</td><td><code>onedrive|file|external</code></td><td>onedrive</td><td>file</td><td>external</td></tr>
+<tr><td><code>O30</code></td><td>Embed a video in a PowerPoint slide</td><td><code>powerpoint|embed|video</code></td><td>powerpoint</td><td>embed</td><td>video</td></tr>
+<tr><td><code>O31</code></td><td>Count duplicates in an Excel column</td><td><code>excel|count|duplicates</code></td><td>excel</td><td>count</td><td>duplicates</td></tr>
+<tr><td><code>O32</code></td><td>How do I find repeated values in a column in Excel?</td><td><code>excel|repeated-values|</code></td><td>excel</td><td>repeated-values</td><td></td></tr>
+<tr><td><code>O33</code></td><td>Insert a table of contents in Word</td><td><code>word|table-of-contents|</code></td><td>word</td><td>table-of-contents</td><td></td></tr>
+<tr><td><code>O34</code></td><td>Schedule a meeting in Teams</td><td><code>meeting|schedule|teams</code></td><td>meeting</td><td>schedule</td><td>teams</td></tr>
+<tr><td><code>O35</code></td><td>Add a signature in Outlook</td><td><code>outlook|signature|</code></td><td>outlook</td><td>signature</td><td></td></tr>
+</tbody></table>
+</div>
+<div class='section'><h2>Near-duplicate clusters</h2>
+<table><thead><tr><th>Canonical ID</th><th>Canonical input</th><th>Members</th></tr></thead><tbody>
+<tr><td><code>O27</code></td><td>Steps to build a pivot table from data in Excel</td><td><code>O01</code>: How do I create a PivotTable in Excel?<br><code>O02</code>: Create a Pivot Table from my Excel data</td></tr>
+<tr><td><code>O06</code></td><td>Freeze header row in Excel</td><td><code>O05</code>: How do I freeze the top row in Excel?</td></tr>
+</tbody></table>
+</div>
+<div class='section'><h2>Leakage matches</h2>
+<table><thead><tr><th>Item ID</th><th>File</th><th>Match score</th><th>Reason</th><th>Snippet</th></tr></thead><tbody>
+<tr><td><code>O08</code></td><td><code>examples/office_eval/refs/word_page_numbers.txt</code></td><td>0.900</td><td>The expected answer conveys the same steps for adding page numbers in Word, albeit with slightly different wording.</td><td>To add page numbers in Word: Go to Insert &gt; Page Number, choose Top of Page or Bottom of Page, then select a style.</td></tr>
+<tr><td><code>O15</code></td><td><code>examples/office_eval/refs/outlook_delay_delivery.txt</code></td><td>0.900</td><td>The expected answer paraphrases the steps outlined in the reference sentence, conveying the same instructions.</td><td>In Outlook for Windows, compose your message, choose Options &gt; Delay Delivery, then tick &quot;Do not deliver before&quot; and pick a date and time.</td></tr>
+<tr><td><code>O16</code></td><td><code>examples/office_eval/refs/onedrive_retention.txt</code></td><td>1.000</td><td>The expected answer is a paraphrase of the reference sentence, conveying the same fact about the duration items are kept in the recycle bin.</td><td>Items in the recycle bin are kept for about 30 days by default.</td></tr>
+<tr><td><code>O24</code></td><td><code>examples/office_eval/refs/outlook_delay_delivery.txt</code></td><td>1.000</td><td>The expected answer outlines the steps to delay delivery in Outlook for Windows, which are directly stated in the reference sentence.</td><td>In Outlook for Windows, compose your message, choose Options &gt; Delay Delivery, then tick &quot;Do not deliver before&quot; and pick a date and time.</td></tr>
+<tr><td><code>O25</code></td><td><code>examples/office_eval/refs/onedrive_retention.txt</code></td><td>0.900</td><td>The expected answer &#x27;Yes&#x27; implies that it is possible to restore files, which is directly supported by the reference sentence.</td><td>You can restore files from the recycle bin within that period.</td></tr>
+<tr><td><code>O26</code></td><td><code>examples/office_eval/refs/excel_shortcuts.txt</code></td><td>1.000</td><td>The expected answer is identical to the reference sentence.</td><td>Press Ctrl+V to paste.</td></tr>
+</tbody></table>
+</div>
+<div class='section'><h2>Rubric issues</h2>
+<table><thead><tr><th>ID</th><th>Input</th><th>Severity</th><th>Code</th><th>Reason</th><th>Suggested fix</th></tr></thead><tbody>
+<tr><td><code>O23</code></td><td>How do I change the theme?</td><td><span class='issue-warn'>warn</span></td><td><code>ambiguous_llm</code></td><td>LLM flagged missing scope or vague phrasing.</td><td>Clarify by specifying the application (e.g., Word, PowerPoint, Windows) and the context (e.g., document, slide master, OS).</td></tr>
+<tr><td><code>O23</code></td><td>How do I change the theme?</td><td><span class='issue-err'>error</span></td><td><code>not_gradeable</code></td><td>LLM judged the expected answer not sufficiently objective to grade.</td><td>Clarify by specifying the application (e.g., Word, PowerPoint, Windows) and the context (e.g., document, slide master, OS).</td></tr>
+<tr><td><code>O24</code></td><td>Export to PDF</td><td><span class='issue-err'>error</span></td><td><code>missing_expected</code></td><td>Expected answer is missing or empty.</td><td>Add a concise, objective expected answer.</td></tr>
+<tr><td><code>O24</code></td><td>Export to PDF</td><td><span class='issue-warn'>warn</span></td><td><code>ambiguous_llm</code></td><td>LLM flagged missing scope or vague phrasing.</td><td>Specify the software or context for exporting to PDF and provide an expected outcome or criteria for evaluation.</td></tr>
+<tr><td><code>O24</code></td><td>Export to PDF</td><td><span class='issue-err'>error</span></td><td><code>not_gradeable</code></td><td>LLM judged the expected answer not sufficiently objective to grade.</td><td>Specify the software or context for exporting to PDF and provide an expected outcome or criteria for evaluation.</td></tr>
+<tr><td><code>O25</code></td><td>Turn on dark mode in Office</td><td><span class='issue-warn'>warn</span></td><td><code>too_short</code></td><td>Expected answer is very short (1 words).</td><td>Add minimal steps or criteria to make it gradeable.</td></tr>
+<tr><td><code>O25</code></td><td>Turn on dark mode in Office</td><td><span class='issue-err'>error</span></td><td><code>not_gradeable</code></td><td>LLM judged the expected answer not sufficiently objective to grade.</td><td>Provide detailed steps on how to turn on dark mode in a specific version of Office.</td></tr>
+<tr><td><code>O26</code></td><td>How to paste in Excel?</td><td><span class='issue-warn'>warn</span></td><td><code>too_short</code></td><td>Expected answer is very short (5 words).</td><td>Add minimal steps or criteria to make it gradeable.</td></tr>
+<tr><td><code>O28</code></td><td>Create a pivot and format the range as a table</td><td><span class='issue-err'>error</span></td><td><code>multi_intent_signals</code></td><td>Question likely asks for multiple actions.</td><td>Split into separate, single-task items.</td></tr>
+</tbody></table>
+</div>
+<footer>Generated by Golden-Set Doctor · LLM-only v1</footer></body></html>

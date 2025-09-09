@@ -1,0 +1,771 @@
+{
+  "dataset": "examples/office_eval/dataset_office40.jsonl",
+  "refs_dir": "examples/office_eval/refs",
+  "counts": {
+    "items": 33,
+    "dup_clusters": 2,
+    "dup_members": 3,
+    "leakage": 6,
+    "rubric_errors": 5,
+    "rubric_warnings": 4
+  },
+  "dup_clusters": [
+    {
+      "canonical": "O27",
+      "canonical_input": "Steps to build a pivot table from data in Excel",
+      "members": [
+        "O01",
+        "O02"
+      ],
+      "member_inputs": [
+        "How do I create a PivotTable in Excel?",
+        "Create a Pivot Table from my Excel data"
+      ]
+    },
+    {
+      "canonical": "O06",
+      "canonical_input": "Freeze header row in Excel",
+      "members": [
+        "O05"
+      ],
+      "member_inputs": [
+        "How do I freeze the top row in Excel?"
+      ]
+    }
+  ],
+  "leakage": [
+    {
+      "item_id": "O08",
+      "file": "examples/office_eval/refs/word_page_numbers.txt",
+      "snippet": "To add page numbers in Word: Go to Insert > Page Number, choose Top of Page or Bottom of Page, then select a style.",
+      "score": 0.9,
+      "reason": "The expected answer conveys the same steps for adding page numbers in Word, albeit with slightly different wording."
+    },
+    {
+      "item_id": "O15",
+      "file": "examples/office_eval/refs/outlook_delay_delivery.txt",
+      "snippet": "In Outlook for Windows, compose your message, choose Options > Delay Delivery, then tick \"Do not deliver before\" and pick a date and time.",
+      "score": 0.9,
+      "reason": "The expected answer paraphrases the steps outlined in the reference sentence, conveying the same instructions."
+    },
+    {
+      "item_id": "O16",
+      "file": "examples/office_eval/refs/onedrive_retention.txt",
+      "snippet": "Items in the recycle bin are kept for about 30 days by default.",
+      "score": 1.0,
+      "reason": "The expected answer is a paraphrase of the reference sentence, conveying the same fact about the duration items are kept in the recycle bin."
+    },
+    {
+      "item_id": "O24",
+      "file": "examples/office_eval/refs/outlook_delay_delivery.txt",
+      "snippet": "In Outlook for Windows, compose your message, choose Options > Delay Delivery, then tick \"Do not deliver before\" and pick a date and time.",
+      "score": 1.0,
+      "reason": "The expected answer outlines the steps to delay delivery in Outlook for Windows, which are directly stated in the reference sentence."
+    },
+    {
+      "item_id": "O25",
+      "file": "examples/office_eval/refs/onedrive_retention.txt",
+      "snippet": "You can restore files from the recycle bin within that period.",
+      "score": 0.9,
+      "reason": "The expected answer 'Yes' implies that it is possible to restore files, which is directly supported by the reference sentence."
+    },
+    {
+      "item_id": "O26",
+      "file": "examples/office_eval/refs/excel_shortcuts.txt",
+      "snippet": "Press Ctrl+V to paste.",
+      "score": 1.0,
+      "reason": "The expected answer is identical to the reference sentence."
+    }
+  ],
+  "intent": {
+    "items": [
+      {
+        "id": "O01",
+        "input": "How do I create a PivotTable in Excel?",
+        "key": "excel|pivot-table|",
+        "topic": "excel",
+        "slot": "pivot-table",
+        "scope": ""
+      },
+      {
+        "id": "O02",
+        "input": "Create a Pivot Table from my Excel data",
+        "key": "excel|pivot-table|",
+        "topic": "excel",
+        "slot": "pivot-table",
+        "scope": ""
+      },
+      {
+        "id": "O27",
+        "input": "Steps to build a pivot table from data in Excel",
+        "key": "excel|pivot-table|",
+        "topic": "excel",
+        "slot": "pivot-table",
+        "scope": ""
+      },
+      {
+        "id": "O05",
+        "input": "How do I freeze the top row in Excel?",
+        "key": "excel|freeze|row",
+        "topic": "excel",
+        "slot": "freeze",
+        "scope": "row"
+      },
+      {
+        "id": "O06",
+        "input": "Freeze header row in Excel",
+        "key": "excel|freeze|row",
+        "topic": "excel",
+        "slot": "freeze",
+        "scope": "row"
+      },
+      {
+        "id": "O07",
+        "input": "How do I add page numbers in Word?",
+        "key": "word|add-page-numbers|",
+        "topic": "word",
+        "slot": "add-page-numbers",
+        "scope": ""
+      },
+      {
+        "id": "O08",
+        "input": "Where do I find page numbering in Word?",
+        "key": "word|page-numbering|",
+        "topic": "word",
+        "slot": "page-numbering",
+        "scope": ""
+      },
+      {
+        "id": "O09",
+        "input": "How do I track changes in Word?",
+        "key": "word|track|",
+        "topic": "word",
+        "slot": "track",
+        "scope": ""
+      },
+      {
+        "id": "O10",
+        "input": "Turn on Track Changes in Word",
+        "key": "word|track-changes|",
+        "topic": "word",
+        "slot": "track-changes",
+        "scope": ""
+      },
+      {
+        "id": "O11",
+        "input": "Start the PowerPoint presentation from the beginning",
+        "key": "presentation|start|beginning",
+        "topic": "presentation",
+        "slot": "start",
+        "scope": "beginning"
+      },
+      {
+        "id": "O12",
+        "input": "How do I present from the first slide in PowerPoint?",
+        "key": "presentation|method|powerpoint",
+        "topic": "presentation",
+        "slot": "method",
+        "scope": "powerpoint"
+      },
+      {
+        "id": "O13",
+        "input": "Create a rule to move emails in Outlook",
+        "key": "email|rule|outlook",
+        "topic": "email",
+        "slot": "rule",
+        "scope": "outlook"
+      },
+      {
+        "id": "O14",
+        "input": "How to automatically move messages to a folder in Outlook?",
+        "key": "outlook|move|automatically",
+        "topic": "outlook",
+        "slot": "move",
+        "scope": "automatically"
+      },
+      {
+        "id": "O15",
+        "input": "Schedule an email to send later in Outlook",
+        "key": "email|schedule|outlook",
+        "topic": "email",
+        "slot": "schedule",
+        "scope": "outlook"
+      },
+      {
+        "id": "O16",
+        "input": "How long are deleted files kept in OneDrive?",
+        "key": "onedrive|deleted-files|duration",
+        "topic": "onedrive",
+        "slot": "deleted-files",
+        "scope": "duration"
+      },
+      {
+        "id": "O17",
+        "input": "Blur my background in Microsoft Teams",
+        "key": "microsoft-teams|background|",
+        "topic": "microsoft-teams",
+        "slot": "background",
+        "scope": ""
+      },
+      {
+        "id": "O18",
+        "input": "Create a private channel in Teams",
+        "key": "teams|channel|private",
+        "topic": "teams",
+        "slot": "channel",
+        "scope": "private"
+      },
+      {
+        "id": "O19",
+        "input": "How do I make a private channel in Microsoft Teams?",
+        "key": "microsoft-teams|create|private-channel",
+        "topic": "microsoft-teams",
+        "slot": "create",
+        "scope": "private-channel"
+      },
+      {
+        "id": "O20",
+        "input": "Create a new list in SharePoint",
+        "key": "sharepoint|list|create",
+        "topic": "sharepoint",
+        "slot": "list",
+        "scope": "create"
+      },
+      {
+        "id": "O21",
+        "input": "How do I use VLOOKUP in Excel?",
+        "key": "excel|vlookup|",
+        "topic": "excel",
+        "slot": "vlookup",
+        "scope": ""
+      },
+      {
+        "id": "O22",
+        "input": "VLOOKUP across sheets in Excel",
+        "key": "excel|vlookup|sheets",
+        "topic": "excel",
+        "slot": "vlookup",
+        "scope": "sheets"
+      },
+      {
+        "id": "O23",
+        "input": "How do I change the theme?",
+        "key": "theme|change|",
+        "topic": "theme",
+        "slot": "change",
+        "scope": ""
+      },
+      {
+        "id": "O24",
+        "input": "Export to PDF",
+        "key": "export|pdf|",
+        "topic": "export",
+        "slot": "pdf",
+        "scope": ""
+      },
+      {
+        "id": "O25",
+        "input": "Turn on dark mode in Office",
+        "key": "office|dark-mode|",
+        "topic": "office",
+        "slot": "dark-mode",
+        "scope": ""
+      },
+      {
+        "id": "O26",
+        "input": "How to paste in Excel?",
+        "key": "excel|paste|",
+        "topic": "excel",
+        "slot": "paste",
+        "scope": ""
+      },
+      {
+        "id": "O28",
+        "input": "Create a pivot and format the range as a table",
+        "key": "pivot|format|table",
+        "topic": "pivot",
+        "slot": "format",
+        "scope": "table"
+      },
+      {
+        "id": "O29",
+        "input": "Share a OneDrive file externally",
+        "key": "onedrive|file|external",
+        "topic": "onedrive",
+        "slot": "file",
+        "scope": "external"
+      },
+      {
+        "id": "O30",
+        "input": "Embed a video in a PowerPoint slide",
+        "key": "powerpoint|embed|video",
+        "topic": "powerpoint",
+        "slot": "embed",
+        "scope": "video"
+      },
+      {
+        "id": "O31",
+        "input": "Count duplicates in an Excel column",
+        "key": "excel|count|duplicates",
+        "topic": "excel",
+        "slot": "count",
+        "scope": "duplicates"
+      },
+      {
+        "id": "O32",
+        "input": "How do I find repeated values in a column in Excel?",
+        "key": "excel|repeated-values|",
+        "topic": "excel",
+        "slot": "repeated-values",
+        "scope": ""
+      },
+      {
+        "id": "O33",
+        "input": "Insert a table of contents in Word",
+        "key": "word|table-of-contents|",
+        "topic": "word",
+        "slot": "table-of-contents",
+        "scope": ""
+      },
+      {
+        "id": "O34",
+        "input": "Schedule a meeting in Teams",
+        "key": "meeting|schedule|teams",
+        "topic": "meeting",
+        "slot": "schedule",
+        "scope": "teams"
+      },
+      {
+        "id": "O35",
+        "input": "Add a signature in Outlook",
+        "key": "outlook|signature|",
+        "topic": "outlook",
+        "slot": "signature",
+        "scope": ""
+      }
+    ],
+    "buckets": [
+      {
+        "key": "excel|pivot-table|",
+        "size": 3,
+        "members": [
+          {
+            "id": "O01",
+            "input": "How do I create a PivotTable in Excel?"
+          },
+          {
+            "id": "O02",
+            "input": "Create a Pivot Table from my Excel data"
+          },
+          {
+            "id": "O27",
+            "input": "Steps to build a pivot table from data in Excel"
+          }
+        ]
+      },
+      {
+        "key": "excel|freeze|row",
+        "size": 2,
+        "members": [
+          {
+            "id": "O05",
+            "input": "How do I freeze the top row in Excel?"
+          },
+          {
+            "id": "O06",
+            "input": "Freeze header row in Excel"
+          }
+        ]
+      },
+      {
+        "key": "email|rule|outlook",
+        "size": 1,
+        "members": [
+          {
+            "id": "O13",
+            "input": "Create a rule to move emails in Outlook"
+          }
+        ]
+      },
+      {
+        "key": "email|schedule|outlook",
+        "size": 1,
+        "members": [
+          {
+            "id": "O15",
+            "input": "Schedule an email to send later in Outlook"
+          }
+        ]
+      },
+      {
+        "key": "excel|count|duplicates",
+        "size": 1,
+        "members": [
+          {
+            "id": "O31",
+            "input": "Count duplicates in an Excel column"
+          }
+        ]
+      },
+      {
+        "key": "excel|paste|",
+        "size": 1,
+        "members": [
+          {
+            "id": "O26",
+            "input": "How to paste in Excel?"
+          }
+        ]
+      },
+      {
+        "key": "excel|repeated-values|",
+        "size": 1,
+        "members": [
+          {
+            "id": "O32",
+            "input": "How do I find repeated values in a column in Excel?"
+          }
+        ]
+      },
+      {
+        "key": "excel|vlookup|",
+        "size": 1,
+        "members": [
+          {
+            "id": "O21",
+            "input": "How do I use VLOOKUP in Excel?"
+          }
+        ]
+      },
+      {
+        "key": "excel|vlookup|sheets",
+        "size": 1,
+        "members": [
+          {
+            "id": "O22",
+            "input": "VLOOKUP across sheets in Excel"
+          }
+        ]
+      },
+      {
+        "key": "export|pdf|",
+        "size": 1,
+        "members": [
+          {
+            "id": "O24",
+            "input": "Export to PDF"
+          }
+        ]
+      },
+      {
+        "key": "meeting|schedule|teams",
+        "size": 1,
+        "members": [
+          {
+            "id": "O34",
+            "input": "Schedule a meeting in Teams"
+          }
+        ]
+      },
+      {
+        "key": "microsoft-teams|background|",
+        "size": 1,
+        "members": [
+          {
+            "id": "O17",
+            "input": "Blur my background in Microsoft Teams"
+          }
+        ]
+      },
+      {
+        "key": "microsoft-teams|create|private-channel",
+        "size": 1,
+        "members": [
+          {
+            "id": "O19",
+            "input": "How do I make a private channel in Microsoft Teams?"
+          }
+        ]
+      },
+      {
+        "key": "office|dark-mode|",
+        "size": 1,
+        "members": [
+          {
+            "id": "O25",
+            "input": "Turn on dark mode in Office"
+          }
+        ]
+      },
+      {
+        "key": "onedrive|deleted-files|duration",
+        "size": 1,
+        "members": [
+          {
+            "id": "O16",
+            "input": "How long are deleted files kept in OneDrive?"
+          }
+        ]
+      },
+      {
+        "key": "onedrive|file|external",
+        "size": 1,
+        "members": [
+          {
+            "id": "O29",
+            "input": "Share a OneDrive file externally"
+          }
+        ]
+      },
+      {
+        "key": "outlook|move|automatically",
+        "size": 1,
+        "members": [
+          {
+            "id": "O14",
+            "input": "How to automatically move messages to a folder in Outlook?"
+          }
+        ]
+      },
+      {
+        "key": "outlook|signature|",
+        "size": 1,
+        "members": [
+          {
+            "id": "O35",
+            "input": "Add a signature in Outlook"
+          }
+        ]
+      },
+      {
+        "key": "pivot|format|table",
+        "size": 1,
+        "members": [
+          {
+            "id": "O28",
+            "input": "Create a pivot and format the range as a table"
+          }
+        ]
+      },
+      {
+        "key": "powerpoint|embed|video",
+        "size": 1,
+        "members": [
+          {
+            "id": "O30",
+            "input": "Embed a video in a PowerPoint slide"
+          }
+        ]
+      },
+      {
+        "key": "presentation|method|powerpoint",
+        "size": 1,
+        "members": [
+          {
+            "id": "O12",
+            "input": "How do I present from the first slide in PowerPoint?"
+          }
+        ]
+      },
+      {
+        "key": "presentation|start|beginning",
+        "size": 1,
+        "members": [
+          {
+            "id": "O11",
+            "input": "Start the PowerPoint presentation from the beginning"
+          }
+        ]
+      },
+      {
+        "key": "sharepoint|list|create",
+        "size": 1,
+        "members": [
+          {
+            "id": "O20",
+            "input": "Create a new list in SharePoint"
+          }
+        ]
+      },
+      {
+        "key": "teams|channel|private",
+        "size": 1,
+        "members": [
+          {
+            "id": "O18",
+            "input": "Create a private channel in Teams"
+          }
+        ]
+      },
+      {
+        "key": "theme|change|",
+        "size": 1,
+        "members": [
+          {
+            "id": "O23",
+            "input": "How do I change the theme?"
+          }
+        ]
+      },
+      {
+        "key": "word|add-page-numbers|",
+        "size": 1,
+        "members": [
+          {
+            "id": "O07",
+            "input": "How do I add page numbers in Word?"
+          }
+        ]
+      },
+      {
+        "key": "word|page-numbering|",
+        "size": 1,
+        "members": [
+          {
+            "id": "O08",
+            "input": "Where do I find page numbering in Word?"
+          }
+        ]
+      },
+      {
+        "key": "word|table-of-contents|",
+        "size": 1,
+        "members": [
+          {
+            "id": "O33",
+            "input": "Insert a table of contents in Word"
+          }
+        ]
+      },
+      {
+        "key": "word|track-changes|",
+        "size": 1,
+        "members": [
+          {
+            "id": "O10",
+            "input": "Turn on Track Changes in Word"
+          }
+        ]
+      },
+      {
+        "key": "word|track|",
+        "size": 1,
+        "members": [
+          {
+            "id": "O09",
+            "input": "How do I track changes in Word?"
+          }
+        ]
+      }
+    ]
+  },
+  "rubric": {
+    "counts": {
+      "errors": 5,
+      "warnings": 4,
+      "infos": 0
+    },
+    "items": [
+      {
+        "id": "O23",
+        "input": "How do I change the theme?",
+        "issues": [
+          {
+            "severity": "warn",
+            "code": "ambiguous_llm",
+            "reason": "LLM flagged missing scope or vague phrasing.",
+            "suggest": "Clarify by specifying the application (e.g., Word, PowerPoint, Windows) and the context (e.g., document, slide master, OS)."
+          },
+          {
+            "severity": "error",
+            "code": "not_gradeable",
+            "reason": "LLM judged the expected answer not sufficiently objective to grade.",
+            "suggest": "Clarify by specifying the application (e.g., Word, PowerPoint, Windows) and the context (e.g., document, slide master, OS)."
+          }
+        ]
+      },
+      {
+        "id": "O24",
+        "input": "Export to PDF",
+        "issues": [
+          {
+            "severity": "error",
+            "code": "missing_expected",
+            "reason": "Expected answer is missing or empty.",
+            "suggest": "Add a concise, objective expected answer."
+          },
+          {
+            "severity": "warn",
+            "code": "ambiguous_llm",
+            "reason": "LLM flagged missing scope or vague phrasing.",
+            "suggest": "Specify the software or context for exporting to PDF and provide an expected outcome or criteria for evaluation."
+          },
+          {
+            "severity": "error",
+            "code": "not_gradeable",
+            "reason": "LLM judged the expected answer not sufficiently objective to grade.",
+            "suggest": "Specify the software or context for exporting to PDF and provide an expected outcome or criteria for evaluation."
+          }
+        ]
+      },
+      {
+        "id": "O25",
+        "input": "Turn on dark mode in Office",
+        "issues": [
+          {
+            "severity": "warn",
+            "code": "too_short",
+            "reason": "Expected answer is very short (1 words).",
+            "suggest": "Add minimal steps or criteria to make it gradeable."
+          },
+          {
+            "severity": "error",
+            "code": "not_gradeable",
+            "reason": "LLM judged the expected answer not sufficiently objective to grade.",
+            "suggest": "Provide detailed steps on how to turn on dark mode in a specific version of Office."
+          }
+        ]
+      },
+      {
+        "id": "O26",
+        "input": "How to paste in Excel?",
+        "issues": [
+          {
+            "severity": "warn",
+            "code": "too_short",
+            "reason": "Expected answer is very short (5 words).",
+            "suggest": "Add minimal steps or criteria to make it gradeable."
+          }
+        ]
+      },
+      {
+        "id": "O28",
+        "input": "Create a pivot and format the range as a table",
+        "issues": [
+          {
+            "severity": "error",
+            "code": "multi_intent_signals",
+            "reason": "Question likely asks for multiple actions.",
+            "suggest": "Split into separate, single-task items."
+          }
+        ]
+      }
+    ]
+  },
+  "timings": {
+    "intent_sec": 47.69112181663513,
+    "duplicates_sec": 13.003775835037231,
+    "leakage_sec": 371.81775307655334,
+    "rubric_sec": 66.6636233329773,
+    "total_sec": 499.176274061203
+  },
+  "stats": {
+    "intent_calls": 33,
+    "buckets": 30,
+    "bucket_calls": 2,
+    "dup_pair_verifications": 4,
+    "dup_pairs_total": 528,
+    "dup_pairs_within_buckets": 4,
+    "leak_calls": 256
+  }
+}

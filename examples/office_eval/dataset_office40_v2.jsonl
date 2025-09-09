@@ -1,0 +1,30 @@
+{"id": "O27", "input": "Steps to build a pivot table from data in Excel", "expected": "Open the workbook and click any cell in your source range. Go to Insert > PivotTable. In the dialog, confirm the table/range and choose New Worksheet. In the PivotTable Fields pane, drag a categorical field to Rows, a metric to Values, optionally another dimension to Columns. Use Value Field Settings to change aggregation (Sum/Count/Avg). Apply number formatting, add slicers, and refresh as needed with Data > Refresh. Keep the source as a proper Excel Table for stability.", "accepted": ["Select your data, choose Insert > PivotTable, pick the range, and place the PivotTable on a new worksheet. Drag fields to Rows, Columns, and Values.", "Insert > PivotTable, select the table/range, choose New Worksheet, then arrange fields in the field list.", "Use Recommended PivotTables under Insert."]}
+{"id": "O06", "input": "Freeze header row in Excel", "expected": "Use View > Freeze Panes > Freeze Top Row.", "accepted": ["View > Freeze Panes > Freeze Top Row."]}
+{"id": "O07", "input": "How do I add page numbers in Word?", "expected": "Insert > Page Number > choose a position and style.", "context_url": "examples/office_eval/refs/word_page_numbers.txt"}
+{"id": "O08", "input": "Where do I find page numbering in Word?", "expected": "Go to Insert, select Page Number, then choose Top or Bottom of Page.", "context_url": "examples/office_eval/refs/word_page_numbers.txt"}
+{"id": "O09", "input": "How do I track changes in Word?", "expected": "Review > Track Changes to toggle it on. Use Simple Markup to view edits."}
+{"id": "O10", "input": "Turn on Track Changes in Word", "expected": "Open the Review tab and select Track Changes."}
+{"id": "O11", "input": "Start the PowerPoint presentation from the beginning", "expected": "Press F5 or choose Slide Show > From Beginning."}
+{"id": "O12", "input": "How do I present from the first slide in PowerPoint?", "expected": "Use Slide Show > From Beginning or press F5."}
+{"id": "O13", "input": "Create a rule to move emails in Outlook", "expected": "Home > Rules > Create Rule, set the condition and choose the destination folder."}
+{"id": "O14", "input": "How to automatically move messages to a folder in Outlook?", "expected": "Open Home > Rules > Create Rule and pick the criteria and folder."}
+{"id": "O15", "input": "Schedule an email to send later in Outlook", "expected": "Compose the email, go to Options > Delay Delivery, tick Do not deliver before, then pick date/time.", "context_url": "examples/office_eval/refs/outlook_delay_delivery.txt"}
+{"id": "O16", "input": "How long are deleted files kept in OneDrive?", "expected": "OneDrive keeps items in the recycle bin for about 30 days by default.", "context_url": "examples/office_eval/refs/onedrive_retention.txt"}
+{"id": "O17", "input": "Blur my background in Microsoft Teams", "expected": "Before joining, toggle Effects and avatars > Blur. In-meeting: More > Effects and avatars > Blur."}
+{"id": "O18", "input": "Create a private channel in Teams", "expected": "Go to a team, choose More options > Add channel, set Privacy to Private and add members."}
+{"id": "O19", "input": "How do I make a private channel in Microsoft Teams?", "expected": "Open the team, select Add channel, set Privacy to Private, then add people."}
+{"id": "O20", "input": "Create a new list in SharePoint", "expected": "From your site, select New > List, choose Blank list or from a template, then name and create it."}
+{"id": "O21", "input": "How do I use VLOOKUP in Excel?", "expected": "=VLOOKUP(lookup_value, table_array, col_index_num, FALSE) for exact match."}
+{"id": "O22", "input": "VLOOKUP across sheets in Excel", "expected": "Use =VLOOKUP(A2, 'Sheet2'!A:B, 2, FALSE) to pull a value from another sheet."}
+{"id": "O23", "input": "How do I change the theme?", "expected": "Ambiguous: specify the app (Word/PowerPoint/Windows) and scope (document, slide master, OS)."}
+{"id": "O24", "input": "Export to PDF", "context_url": "examples/office_eval/refs/outlook_delay_delivery.txt"}
+{"id": "O25", "input": "Turn on dark mode in Office", "expected": "Yes.", "context_url": "examples/office_eval/refs/onedrive_retention.txt"}
+{"id": "O26", "input": "How to paste in Excel?", "expected": "Press Ctrl+V to paste.", "context_url": "examples/office_eval/refs/excel_shortcuts.txt"}
+{"id": "O28", "input": "Create a pivot and format the range as a table", "expected": "First format as a table via Home > Format as Table; then Insert > PivotTable."}
+{"id": "O29", "input": "Share a OneDrive file externally", "expected": "Select the file, Share > Anyone with the link, set permissions, and send the link."}
+{"id": "O30", "input": "Embed a video in a PowerPoint slide", "expected": "Insert > Video > This Device (or Online Video), choose the file, then resize on the slide."}
+{"id": "O31", "input": "Count duplicates in an Excel column", "expected": "Use COUNTIF: =COUNTIF(A:A, A2) then filter values >1."}
+{"id": "O32", "input": "How do I find repeated values in a column in Excel?", "expected": "Apply Conditional Formatting > Highlight Cells Rules > Duplicate Values, or use COUNTIF to count repeats."}
+{"id": "O33", "input": "Insert a table of contents in Word", "expected": "Apply heading styles, then References > Table of Contents > choose an automatic style."}
+{"id": "O34", "input": "Schedule a meeting in Teams", "expected": "Calendar > New meeting, add title, attendees, time, then Send."}
+{"id": "O35", "input": "Add a signature in Outlook", "expected": "File > Options > Mail > Signatures, create a new signature and set it as default."}
