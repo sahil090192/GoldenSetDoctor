@@ -1,0 +1,1008 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="GoldenSetDoctor is an eval-set health layer for AI teams: lint golden sets, surface release risks, and gate AI releases with confidence.">
+  <title>GoldenSetDoctor - Eval-Set Health For AI Teams</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Doto:wght@700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #000000;
+      --paper: #e5e7eb;
+      --paper-2: #f4f5f6;
+      --display: #11161c;
+      --display-2: #171d25;
+      --display-3: #222936;
+      --muted: #575c75;
+      --muted-light: #aab0c1;
+      --line: #d4d7de;
+      --line-dark: #2a3442;
+      --red: #f43325;
+      --red-dark: #ca2419;
+      --white: #ffffff;
+      --radius-pill: 999px;
+      --radius-display: clamp(34px, 8vw, 128px);
+      --max: 1180px;
+      --font-body: "Space Grotesk", "proxima-nova", ui-sans-serif, system-ui, sans-serif;
+      --font-data: "Doto", "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
+
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--font-body);
+      letter-spacing: 0;
+      overflow-x: hidden;
+    }
+
+    body::selection {
+      background: var(--red);
+      color: var(--white);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button, a {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .hero {
+      min-height: 96svh;
+      position: relative;
+      overflow: hidden;
+      color: var(--white);
+      background: var(--display);
+      isolation: isolate;
+    }
+
+    #field {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -2;
+      background: var(--display);
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background:
+        linear-gradient(90deg, rgba(17, 22, 28, 0.96) 0%, rgba(17, 22, 28, 0.78) 46%, rgba(17, 22, 28, 0.32) 100%),
+        repeating-linear-gradient(90deg, rgba(255,255,255,0.03) 0 1px, transparent 1px 82px),
+        repeating-linear-gradient(0deg, rgba(255,255,255,0.025) 0 1px, transparent 1px 82px);
+      pointer-events: none;
+    }
+
+    .nav {
+      width: min(var(--max), calc(100% - 32px));
+      margin: 0 auto;
+      min-height: 74px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 700;
+      font-size: 15px;
+    }
+
+    .mark {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: var(--red);
+      color: var(--white);
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      line-height: 1;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      font-size: 13px;
+      color: rgba(255,255,255,0.72);
+    }
+
+    .nav-links a {
+      transition: color 180ms ease, transform 180ms ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--white);
+      transform: translateY(-1px);
+    }
+
+    .hero-content {
+      width: min(var(--max), calc(100% - 32px));
+      margin: 0 auto;
+      min-height: calc(96svh - 74px);
+      display: grid;
+      align-content: center;
+      padding: clamp(48px, 9vw, 130px) 0 clamp(68px, 8vw, 110px);
+    }
+
+    .eyebrow {
+      width: fit-content;
+      border: 1px solid rgba(255,255,255,0.22);
+      border-radius: var(--radius-pill);
+      padding: 6px 12px;
+      color: rgba(255,255,255,0.76);
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      max-width: 860px;
+      margin: 24px 0 0;
+      font-size: clamp(44px, 8vw, 112px);
+      line-height: 0.94;
+      letter-spacing: 0;
+      font-weight: 700;
+    }
+
+    .hero-copy {
+      max-width: 690px;
+      margin: 28px 0 0;
+      color: rgba(255,255,255,0.72);
+      font-size: clamp(18px, 2vw, 25px);
+      line-height: 1.34;
+    }
+
+    .hero-actions {
+      margin-top: 34px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .btn {
+      min-height: 44px;
+      border: 1px solid transparent;
+      border-radius: var(--radius-pill);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 11px 19px;
+      font-size: 15px;
+      font-weight: 700;
+      transition: transform 180ms ease, background 180ms ease, border-color 180ms ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn-primary {
+      background: var(--red);
+      color: var(--white);
+    }
+
+    .btn-primary:hover {
+      background: var(--red-dark);
+    }
+
+    .btn-ghost {
+      border-color: rgba(255,255,255,0.28);
+      color: var(--white);
+      background: rgba(255,255,255,0.04);
+    }
+
+    .btn-ghost:hover {
+      border-color: rgba(255,255,255,0.52);
+    }
+
+    .hero-strip {
+      width: min(var(--max), calc(100% - 32px));
+      margin: -54px auto 0;
+      position: relative;
+      z-index: 3;
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr 0.8fr;
+      gap: 10px;
+    }
+
+    .instrument {
+      min-height: 154px;
+      background: var(--display);
+      color: var(--white);
+      border-radius: var(--radius-display);
+      border: 1px solid rgba(255,255,255,0.08);
+      padding: clamp(22px, 3vw, 34px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .instrument::before {
+      content: "";
+      position: absolute;
+      inset: 8px;
+      border-radius: inherit;
+      border: 1px solid rgba(255,255,255,0.06);
+      pointer-events: none;
+    }
+
+    .instrument .number {
+      font-family: var(--font-data);
+      font-size: clamp(58px, 10vw, 112px);
+      line-height: 0.82;
+      font-weight: 900;
+    }
+
+    .instrument p {
+      max-width: 390px;
+      margin: 14px 0 0;
+      color: var(--muted-light);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    main {
+      background: var(--paper);
+    }
+
+    section {
+      width: min(var(--max), calc(100% - 32px));
+      margin: 0 auto;
+      padding: clamp(78px, 11vw, 150px) 0;
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: minmax(0, 0.86fr) minmax(260px, 0.6fr);
+      gap: clamp(32px, 7vw, 120px);
+      align-items: end;
+      margin-bottom: clamp(34px, 6vw, 76px);
+    }
+
+    h2 {
+      margin: 0;
+      font-size: clamp(40px, 6vw, 88px);
+      line-height: 0.95;
+      letter-spacing: 0;
+    }
+
+    .section-head p,
+    .lead {
+      margin: 0;
+      color: #343943;
+      font-size: clamp(17px, 1.6vw, 22px);
+      line-height: 1.45;
+    }
+
+    .risk-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-top: 1px solid var(--ink);
+      border-left: 1px solid var(--ink);
+      background: var(--paper-2);
+    }
+
+    .risk {
+      min-height: 260px;
+      padding: 24px;
+      border-right: 1px solid var(--ink);
+      border-bottom: 1px solid var(--ink);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .risk strong {
+      font-size: 19px;
+      line-height: 1.1;
+    }
+
+    .risk p {
+      margin: 22px 0 0;
+      color: #4c5260;
+      line-height: 1.45;
+      font-size: 15px;
+    }
+
+    .risk .code {
+      width: fit-content;
+      border-radius: var(--radius-pill);
+      background: var(--display);
+      color: var(--white);
+      padding: 5px 10px;
+      font-family: var(--font-data);
+      font-weight: 900;
+      font-size: 13px;
+    }
+
+    .showcase {
+      width: 100%;
+      margin: 0;
+      padding: clamp(80px, 12vw, 150px) max(16px, calc((100vw - var(--max)) / 2));
+      background: var(--display);
+      color: var(--white);
+    }
+
+    .terminal-shell {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(320px, 0.78fr);
+      gap: clamp(18px, 3vw, 34px);
+      align-items: stretch;
+    }
+
+    .terminal {
+      min-height: 520px;
+      border-radius: clamp(28px, 5vw, 72px);
+      background: #080b0f;
+      border: 1px solid rgba(255,255,255,0.12);
+      padding: clamp(18px, 3vw, 36px);
+      overflow: hidden;
+    }
+
+    .term-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      padding: 15px 0;
+      color: rgba(255,255,255,0.78);
+      font-size: 14px;
+    }
+
+    .term-row:first-child {
+      padding-top: 0;
+    }
+
+    .term-row .warn {
+      color: #ffddda;
+    }
+
+    .term-row .ok {
+      color: #effff2;
+    }
+
+    .score-panel {
+      border-radius: var(--radius-display);
+      background: var(--paper);
+      color: var(--ink);
+      padding: clamp(24px, 4vw, 44px);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .score {
+      font-family: var(--font-data);
+      font-size: clamp(96px, 15vw, 190px);
+      line-height: 0.82;
+      font-weight: 900;
+    }
+
+    .score-panel h3 {
+      margin: 22px 0 0;
+      font-size: clamp(28px, 4vw, 48px);
+      line-height: 1;
+    }
+
+    .score-panel p {
+      margin: 20px 0 0;
+      color: #4e5667;
+      line-height: 1.45;
+      font-size: 16px;
+    }
+
+    .pipeline {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+      margin-top: 56px;
+    }
+
+    .pipe-step {
+      min-height: 186px;
+      border-radius: 34px;
+      border: 1px solid var(--line);
+      background: var(--paper-2);
+      padding: 22px;
+    }
+
+    .pipe-step span {
+      display: block;
+      font-family: var(--font-data);
+      font-weight: 900;
+      font-size: 42px;
+      line-height: 0.9;
+      color: var(--red);
+      margin-bottom: 28px;
+    }
+
+    .pipe-step strong {
+      display: block;
+      font-size: 18px;
+      line-height: 1.1;
+      margin-bottom: 12px;
+    }
+
+    .pipe-step p {
+      margin: 0;
+      color: #4f5662;
+      font-size: 14px;
+      line-height: 1.42;
+    }
+
+    .vision {
+      display: grid;
+      grid-template-columns: minmax(0, 0.9fr) minmax(300px, 1fr);
+      gap: clamp(30px, 7vw, 96px);
+      align-items: center;
+    }
+
+    .vision-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .vision-item {
+      border-top: 1px solid var(--ink);
+      padding: 22px 0;
+      display: grid;
+      grid-template-columns: 110px 1fr;
+      gap: 20px;
+    }
+
+    .vision-item span {
+      font-family: var(--font-data);
+      font-weight: 900;
+      font-size: 28px;
+      color: var(--red);
+    }
+
+    .vision-item strong {
+      display: block;
+      font-size: 22px;
+      margin-bottom: 7px;
+    }
+
+    .vision-item p {
+      margin: 0;
+      color: #4f5662;
+      line-height: 1.45;
+    }
+
+    .manifesto {
+      width: 100%;
+      margin: 0;
+      padding: clamp(90px, 13vw, 170px) max(16px, calc((100vw - var(--max)) / 2));
+      background: var(--paper-2);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .manifesto blockquote {
+      margin: 0;
+      max-width: 1080px;
+      font-size: clamp(34px, 6.2vw, 92px);
+      line-height: 0.98;
+      font-weight: 700;
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: minmax(280px, 0.55fr) minmax(0, 1fr);
+      gap: clamp(30px, 7vw, 100px);
+    }
+
+    .stack {
+      display: grid;
+      gap: 16px;
+    }
+
+    .capability {
+      background: var(--display);
+      color: var(--white);
+      border-radius: 46px;
+      padding: 28px;
+      min-height: 168px;
+    }
+
+    .capability strong {
+      display: block;
+      font-size: 21px;
+      margin-bottom: 14px;
+    }
+
+    .capability p {
+      margin: 0;
+      color: var(--muted-light);
+      line-height: 1.45;
+    }
+
+    .cta {
+      width: min(var(--max), calc(100% - 32px));
+      margin: 0 auto;
+      padding: clamp(80px, 12vw, 150px) 0;
+    }
+
+    .cta-panel {
+      min-height: 420px;
+      border-radius: var(--radius-display);
+      background: var(--display);
+      color: var(--white);
+      padding: clamp(30px, 7vw, 76px);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(260px, 0.45fr);
+      gap: 30px;
+      align-items: end;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .cta-panel::after {
+      content: "GSD";
+      position: absolute;
+      right: clamp(-30px, -2vw, 0px);
+      top: clamp(12px, 5vw, 60px);
+      font-family: var(--font-data);
+      font-weight: 900;
+      font-size: clamp(96px, 22vw, 340px);
+      line-height: 0.8;
+      color: rgba(255,255,255,0.04);
+      pointer-events: none;
+    }
+
+    .cta-panel h2 {
+      position: relative;
+      z-index: 1;
+      max-width: 760px;
+    }
+
+    .cta-panel p {
+      position: relative;
+      z-index: 1;
+      color: rgba(255,255,255,0.72);
+      font-size: 18px;
+      line-height: 1.42;
+    }
+
+    footer {
+      width: min(var(--max), calc(100% - 32px));
+      margin: 0 auto;
+      padding: 30px 0 50px;
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      color: #555d69;
+      font-size: 13px;
+      border-top: 1px solid var(--line);
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 650ms ease, transform 650ms ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .hero-strip .instrument {
+      opacity: 1;
+      transform: none;
+    }
+
+    @media (max-width: 920px) {
+      .nav-links {
+        display: none;
+      }
+
+      .hero-strip,
+      .section-head,
+      .terminal-shell,
+      .vision,
+      .split,
+      .cta-panel {
+        grid-template-columns: 1fr;
+      }
+
+      .risk-grid,
+      .pipeline {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .hero-strip {
+        margin-top: -34px;
+      }
+
+      .instrument {
+        min-height: 138px;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .hero {
+        min-height: 90svh;
+      }
+
+      .hero-content {
+        min-height: calc(90svh - 74px);
+        align-content: end;
+        padding-bottom: 80px;
+      }
+
+      h1 {
+        max-width: 330px;
+        font-size: 37px;
+        line-height: 1;
+      }
+
+      .hero-copy {
+        max-width: 320px;
+        font-size: 17px;
+      }
+
+      .hero-actions {
+        align-items: stretch;
+        flex-direction: column;
+        width: 100%;
+        max-width: 320px;
+      }
+
+      .hero-actions .btn {
+        width: 100%;
+        max-width: calc(100vw - 32px);
+      }
+
+      .instrument p {
+        max-width: 280px;
+      }
+
+      .risk-grid,
+      .pipeline {
+        grid-template-columns: 1fr;
+      }
+
+      .risk {
+        min-height: 210px;
+      }
+
+      .vision-item {
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+
+      footer {
+        flex-direction: column;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *, *::before, *::after {
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <canvas id="field" aria-hidden="true"></canvas>
+    <nav class="nav" aria-label="Primary">
+      <a class="brand" href="#">
+        <span class="mark">G</span>
+        <span>GoldenSetDoctor</span>
+      </a>
+      <div class="nav-links">
+        <a href="#why">Why</a>
+        <a href="#report">Report</a>
+        <a href="#vision">Vision</a>
+        <a href="#github-pages">GitHub Pages</a>
+      </div>
+    </nav>
+
+    <div class="hero-content">
+      <div class="eyebrow">Eval-set health and release readiness</div>
+      <h1>Trust the score only after you inspect the set.</h1>
+      <p class="hero-copy">GoldenSetDoctor is the quality layer for LLM eval suites: a linter, report generator, and future release gate for teams shipping AI features.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="https://github.com/sahil090192/GoldenSetDoctor">View GitHub</a>
+        <a class="btn btn-ghost" href="#report">See the product shape</a>
+      </div>
+    </div>
+  </header>
+
+  <aside class="hero-strip" aria-label="GoldenSetDoctor signal summary">
+    <div class="instrument reveal">
+      <div class="number">68</div>
+      <p>Eval Fitness Score. Not certification, not theater: a structured read on whether the set is ready to gate a release.</p>
+    </div>
+    <div class="instrument reveal">
+      <div class="number">07</div>
+      <p>Leakage cases found before they quietly inflate your model score.</p>
+    </div>
+    <div class="instrument reveal">
+      <div class="number">18</div>
+      <p>Ungradeable or weak expected answers waiting to become review arguments.</p>
+    </div>
+  </aside>
+
+  <main>
+    <section id="why">
+      <div class="section-head reveal">
+        <h2>AI evals fail upstream.</h2>
+        <p>The painful part is not always the model output. It is the hidden rot in the test set: duplicate scenarios, leaked answers, vague rubrics, stale cases, missing provenance, and coverage that does not match production.</p>
+      </div>
+
+      <div class="risk-grid">
+        <article class="risk reveal">
+          <span class="code">DUP</span>
+          <div>
+            <strong>Repeated scenarios inflate confidence.</strong>
+            <p>One support flow repeated six ways can look like broad coverage while narrowing the actual release signal.</p>
+          </div>
+        </article>
+        <article class="risk reveal">
+          <span class="code">LEAK</span>
+          <div>
+            <strong>Reference docs can give away the answer.</strong>
+            <p>Open-book and closed-book cases need to be clearly separated before scores become decision inputs.</p>
+          </div>
+        </article>
+        <article class="risk reveal">
+          <span class="code">RUB</span>
+          <div>
+            <strong>Weak rubrics create noisy grades.</strong>
+            <p>If a human cannot grade it consistently, the model judge probably should not be trusted either.</p>
+          </div>
+        </article>
+        <article class="risk reveal">
+          <span class="code">GOV</span>
+          <div>
+            <strong>Missing metadata blocks auditability.</strong>
+            <p>Source, owner, severity, last review date, and gating status turn examples into release evidence.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="report" class="showcase">
+      <div class="section-head reveal">
+        <h2>The report should tell you what to fix first.</h2>
+        <p>End-state GSD turns raw findings into release language: blockers, warnings, caveats, fix plans, and the parts it refuses to pretend it can know.</p>
+      </div>
+
+      <div class="terminal-shell">
+        <div class="terminal reveal" aria-label="Example GoldenSetDoctor report output">
+          <div class="term-row"><span>GoldenSetDoctor</span><span>scan complete</span></div>
+          <div class="term-row"><span>Eval Fitness Score</span><span class="warn">68 / 100</span></div>
+          <div class="term-row"><span>Release-Gating Readiness</span><span class="warn">not recommended</span></div>
+          <div class="term-row"><span>GSD007 answer_leakage</span><span class="warn">7 cases</span></div>
+          <div class="term-row"><span>GSD008 ungradeable_rubric</span><span class="warn">18 cases</span></div>
+          <div class="term-row"><span>GSD006 duplicate_case</span><span>12 members</span></div>
+          <div class="term-row"><span>Not assessed</span><span>production fit</span></div>
+          <div class="term-row"><span>Not assessed</span><span>source truth</span></div>
+          <div class="term-row"><span>Next action</span><span class="ok">fix blockers, then rerun</span></div>
+        </div>
+
+        <article class="score-panel reveal">
+          <div>
+            <div class="score">v0.1</div>
+            <h3>From prototype to credible devtool.</h3>
+            <p>The first public version should feel serious in under five minutes: install, scan a sample eval set, generate a premium report, and understand exactly what GSD can and cannot conclude.</p>
+          </div>
+          <a class="btn btn-primary" href="https://github.com/sahil090192/GoldenSetDoctor">Follow the repo</a>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head reveal">
+        <h2>A release pipeline for eval quality.</h2>
+        <p>GSD should sit beside your eval runner, not replace it. The job is to inspect the evidence before the score gets authority.</p>
+      </div>
+      <div class="pipeline">
+        <article class="pipe-step reveal">
+          <span>01</span>
+          <strong>Import</strong>
+          <p>JSONL first, then CSV, Promptfoo, DeepEval, Braintrust, and LangSmith exports.</p>
+        </article>
+        <article class="pipe-step reveal">
+          <span>02</span>
+          <strong>Inspect</strong>
+          <p>Duplicates, leakage, rubric health, metadata, coverage balance, and stale examples.</p>
+        </article>
+        <article class="pipe-step reveal">
+          <span>03</span>
+          <strong>Score</strong>
+          <p>Fitness and readiness computed from available signals with explicit caveats.</p>
+        </article>
+        <article class="pipe-step reveal">
+          <span>04</span>
+          <strong>Report</strong>
+          <p>Executive summary, issue table, actionability labels, and prioritized fix plan.</p>
+        </article>
+        <article class="pipe-step reveal">
+          <span>05</span>
+          <strong>Gate</strong>
+          <p>CI thresholds that fail unsafe eval changes before they reach release meetings.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="vision">
+      <div class="vision">
+        <div class="reveal">
+          <h2>The end-state is governance without ceremony.</h2>
+          <p class="lead">AI teams should be able to answer: can this eval suite be trusted for this release, what broke, what needs human review, and what evidence is missing?</p>
+        </div>
+
+        <div class="vision-list">
+          <article class="vision-item reveal">
+            <span>LOCAL</span>
+            <div>
+              <strong>Private by default.</strong>
+              <p>Run on local eval files, references, and sampled logs without sending sensitive test cases to a hosted dashboard.</p>
+            </div>
+          </article>
+          <article class="vision-item reveal">
+            <span>HONEST</span>
+            <div>
+              <strong>Caveats are product features.</strong>
+              <p>GSD separates what can be diagnosed from the eval set alone from what requires docs, production traffic, run history, or domain judgment.</p>
+            </div>
+          </article>
+          <article class="vision-item reveal">
+            <span>CI</span>
+            <div>
+              <strong>Quality gates belong in the workflow.</strong>
+              <p>Eval-set health should fail builds when leakage, ungradeable rubrics, or readiness thresholds cross the line.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="manifesto">
+      <blockquote class="reveal">Before a score becomes a launch argument, the eval set should survive inspection.</blockquote>
+    </section>
+
+    <section>
+      <div class="split">
+        <div class="reveal">
+          <h2>What GSD can become.</h2>
+        </div>
+        <div class="stack">
+          <article class="capability reveal">
+            <strong>Source-of-truth correctness</strong>
+            <p>Compare expected answers against product docs, policy pages, and changelogs to surface stale or unsupported reference answers.</p>
+          </article>
+          <article class="capability reveal">
+            <strong>Production representativeness</strong>
+            <p>Compare eval intent coverage against anonymized production queries so teams can see what is missing or overrepresented.</p>
+          </article>
+          <article class="capability reveal">
+            <strong>Historical sensitivity</strong>
+            <p>Use eval history to detect flaky cases, low-discrimination examples, judge noise, and release thresholds that no longer mean what they used to.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="github-pages" class="cta">
+      <div class="cta-panel reveal">
+        <div>
+          <h2>Ship the site from this repo.</h2>
+          <p>Merge this PR, then set GitHub Pages to deploy from the `main` branch and `/docs` folder. No build command, no framework, no deployment account.</p>
+        </div>
+        <div>
+          <a class="btn btn-primary" href="https://github.com/sahil090192/GoldenSetDoctor/settings/pages">Open Pages settings</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span>GoldenSetDoctor</span>
+    <span>Eval-set health for teams shipping AI features.</span>
+  </footer>
+
+  <script>
+    const canvas = document.getElementById("field");
+    const ctx = canvas.getContext("2d");
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let points = [];
+
+    function resizeCanvas() {
+      const ratio = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = Math.floor(canvas.offsetWidth * ratio);
+      canvas.height = Math.floor(canvas.offsetHeight * ratio);
+      ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+      const count = Math.floor(canvas.offsetWidth / 26);
+      points = Array.from({ length: count }, (_, i) => ({
+        x: (i / Math.max(1, count - 1)) * canvas.offsetWidth,
+        y: Math.random() * canvas.offsetHeight,
+        speed: 0.14 + Math.random() * 0.32,
+        size: 1 + Math.random() * 2.2,
+        alert: Math.random() > 0.84
+      }));
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.offsetWidth, canvas.offsetHeight);
+      ctx.fillStyle = "#11161c";
+      ctx.fillRect(0, 0, canvas.offsetWidth, canvas.offsetHeight);
+
+      for (const p of points) {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fillStyle = p.alert ? "rgba(244, 51, 37, 0.82)" : "rgba(229, 231, 235, 0.36)";
+        ctx.fill();
+
+        ctx.fillStyle = p.alert ? "rgba(244, 51, 37, 0.12)" : "rgba(229, 231, 235, 0.08)";
+        ctx.fillRect(p.x - 1, p.y, 2, canvas.offsetHeight - p.y);
+
+        if (!reduceMotion) {
+          p.y += p.speed;
+          if (p.y > canvas.offsetHeight + 12) {
+            p.y = -12;
+            p.alert = Math.random() > 0.84;
+          }
+        }
+      }
+
+      if (!reduceMotion) requestAnimationFrame(draw);
+    }
+
+    resizeCanvas();
+    draw();
+    window.addEventListener("resize", () => {
+      resizeCanvas();
+      draw();
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          observer.unobserve(entry.target);
+        }
+      }
+    }, { threshold: 0.14 });
+
+    document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
+  </script>
+</body>
+</html>
